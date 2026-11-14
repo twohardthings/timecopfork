@@ -24,6 +24,7 @@ restart at 1.0.0 (version code 1).
 * Black screen on startup in release builds
 * Start Time, End Time and Duration pickers not opening
 * About screen not showing
+* Licenses page failing to load the Public Sans font license
 * Badge counts not requesting notification permission on iOS
 * File import and export on macOS
 
