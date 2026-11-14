@@ -15,6 +15,7 @@
 import 'dart:async';
 
 import 'dart:io';
+
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/foundation.dart';
@@ -70,35 +71,32 @@ Future<void> main() async {
   await runMain(settings, data);
 }*/
 
-Future<void> runMain(SettingsProvider settings, DataProvider data,
-    NotificationsProvider notifications) async {
+Future<void> runMain(
+  SettingsProvider settings,
+  DataProvider data,
+  NotificationsProvider notifications,
+) async {
   // setup intl date formats?
   //await initializeDateFormatting();
   LicenseRegistry.addLicense(getFontLicenses);
 
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider<ThemeBloc>(
-        create: (_) => ThemeBloc(settings),
-      ),
-      BlocProvider<LocaleBloc>(
-        create: (_) => LocaleBloc(settings),
-      ),
-      BlocProvider<SettingsBloc>(
-        create: (_) => SettingsBloc(settings, data),
-      ),
-      BlocProvider<TimersBloc>(
-        create: (_) => TimersBloc(data, settings, notifications),
-      ),
-      BlocProvider<ProjectsBloc>(
-        create: (_) => ProjectsBloc(data),
-      ),
-      BlocProvider<NotificationsBloc>(
-        create: (_) => NotificationsBloc(notifications),
-      ),
-    ],
-    child: TimeCopApp(settings: settings),
-  ));
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider<ThemeBloc>(create: (_) => ThemeBloc(settings)),
+        BlocProvider<LocaleBloc>(create: (_) => LocaleBloc(settings)),
+        BlocProvider<SettingsBloc>(create: (_) => SettingsBloc(settings, data)),
+        BlocProvider<TimersBloc>(
+          create: (_) => TimersBloc(data, settings, notifications),
+        ),
+        BlocProvider<ProjectsBloc>(create: (_) => ProjectsBloc(data)),
+        BlocProvider<NotificationsBloc>(
+          create: (_) => NotificationsBloc(notifications),
+        ),
+      ],
+      child: TimeCopApp(settings: settings),
+    ),
+  );
 }
 
 class TimeCopApp extends StatefulWidget {
@@ -115,18 +113,28 @@ class _TimeCopAppState extends State<TimeCopApp> with WidgetsBindingObserver {
 
   @override
   void initState() {
-    _updateTimersTimer = Timer.periodic(const Duration(seconds: 1),
-        (_) => BlocProvider.of<TimersBloc>(context).add(const UpdateNow()));
+    _updateTimersTimer = Timer.periodic(
+      const Duration(seconds: 1),
+      (_) => BlocProvider.of<TimersBloc>(context).add(const UpdateNow()),
+    );
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     brightness = WidgetsBinding.instance.platformDispatcher.platformBrightness;
 
     final settingsBloc = BlocProvider.of<SettingsBloc>(context);
     final timersBloc = BlocProvider.of<TimersBloc>(context);
-    settingsBloc.stream.listen((settingsState) => _updateNotificationBadge(
-        settingsState, timersBloc.state.countRunningTimers()));
-    timersBloc.stream.listen((timersState) => _updateNotificationBadge(
-        settingsBloc.state, timersState.countRunningTimers()));
+    settingsBloc.stream.listen(
+      (settingsState) => _updateNotificationBadge(
+        settingsState,
+        timersBloc.state.countRunningTimers(),
+      ),
+    );
+    timersBloc.stream.listen(
+      (timersState) => _updateNotificationBadge(
+        settingsBloc.state,
+        timersState.countRunningTimers(),
+      ),
+    );
 
     // send commands to our top-level blocs to get them to initialize
     settingsBloc.add(LoadSettingsFromRepository());
@@ -173,9 +181,12 @@ class _TimeCopAppState extends State<TimeCopApp> with WidgetsBindingObserver {
       if (settings.showRunningTimersAsNotifications &&
           timers.countRunningTimers() > 0) {
         // print("showing notification");
-        notificationsBloc.add(ShowNotification(
+        notificationsBloc.add(
+          ShowNotification(
             title: l10n.tr.runningTimersNotificationTitle,
-            body: l10n.tr.runningTimersNotificationBody));
+            body: l10n.tr.runningTimersNotificationBody,
+          ),
+        );
       } else {
         // print("not showing notification");
       }
@@ -194,12 +205,17 @@ class _TimeCopAppState extends State<TimeCopApp> with WidgetsBindingObserver {
 
   @override
   void didChangePlatformBrightness() {
-    setState(() => brightness =
-        WidgetsBinding.instance.platformDispatcher.platformBrightness);
+    setState(
+      () => brightness =
+          WidgetsBinding.instance.platformDispatcher.platformBrightness,
+    );
   }
 
   ThemeData getTheme(
-      ThemeType? type, ColorScheme? lightDynamic, ColorScheme? darkDynamic) {
+    ThemeType? type,
+    ColorScheme? lightDynamic,
+    ColorScheme? darkDynamic,
+  ) {
     if (type == ThemeType.autoMaterialYou) {
       if (brightness == Brightness.dark) {
         type = ThemeType.darkMaterialYou;
@@ -216,20 +232,22 @@ class _TimeCopAppState extends State<TimeCopApp> with WidgetsBindingObserver {
         return ThemeUtil.blackTheme;
       case ThemeType.lightMaterialYou:
         return ThemeUtil.getThemeFromColors(
-            brightness: Brightness.light,
-            colors: lightDynamic ?? ThemeUtil.lightColors,
-            appBarBackground:
-                lightDynamic?.surface ?? ThemeUtil.lightColors.surface,
-            appBarForeground:
-                lightDynamic?.onSurface ?? ThemeUtil.lightColors.onSurface);
+          brightness: Brightness.light,
+          colors: lightDynamic ?? ThemeUtil.lightColors,
+          appBarBackground:
+              lightDynamic?.surface ?? ThemeUtil.lightColors.surface,
+          appBarForeground:
+              lightDynamic?.onSurface ?? ThemeUtil.lightColors.onSurface,
+        );
       case ThemeType.darkMaterialYou:
         return ThemeUtil.getThemeFromColors(
-            brightness: Brightness.dark,
-            colors: darkDynamic ?? ThemeUtil.darkColors,
-            appBarBackground:
-                darkDynamic?.surface ?? ThemeUtil.darkColors.surface,
-            appBarForeground:
-                darkDynamic?.onSurface ?? ThemeUtil.darkColors.onSurface);
+          brightness: Brightness.dark,
+          colors: darkDynamic ?? ThemeUtil.darkColors,
+          appBarBackground:
+              darkDynamic?.surface ?? ThemeUtil.darkColors.surface,
+          appBarForeground:
+              darkDynamic?.onSurface ?? ThemeUtil.darkColors.onSurface,
+        );
       case ThemeType.auto:
       default:
         return brightness == Brightness.dark
@@ -241,49 +259,56 @@ class _TimeCopAppState extends State<TimeCopApp> with WidgetsBindingObserver {
   @override
   Widget build(BuildContext context) {
     return MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider<SettingsProvider>.value(value: widget.settings),
-        ],
-        child: BlocBuilder<ThemeBloc, ThemeState>(
-            builder: (BuildContext context, ThemeState themeState) =>
-                BlocBuilder<LocaleBloc, LocaleState>(
-                    builder: (BuildContext context, LocaleState localeState) =>
-                        DynamicColorBuilder(
-                          builder: (ColorScheme? lightDynamic,
-                                  ColorScheme? darkDynamic) =>
-                              MaterialApp(
-                            title: 'Time Cop Fork',
-                            home: const DashboardScreen(),
-                            theme: getTheme(
-                                themeState.theme, lightDynamic, darkDynamic),
-                            localizationsDelegates: const [
-                              L10N.delegate,
-                              GlobalMaterialLocalizations.delegate,
-                              GlobalWidgetsLocalizations.delegate,
-                              GlobalCupertinoLocalizations.delegate,
-                            ],
-                            locale: localeState.locale,
-                            supportedLocales: const [
-                              Locale('en'),
-                              Locale('ar'),
-                              Locale('cs'),
-                              Locale('da'),
-                              Locale('de'),
-                              Locale('es'),
-                              Locale('fr'),
-                              Locale('hi'),
-                              Locale('id'),
-                              Locale('it'),
-                              Locale('ja'),
-                              Locale('ko'),
-                              Locale('nb', 'NO'),
-                              Locale('pt'),
-                              Locale('ru'),
-                              Locale('tr'),
-                              Locale('zh', 'CN'),
-                              Locale('zh', 'TW'),
-                            ],
-                          ),
-                        ))));
+      providers: [
+        RepositoryProvider<SettingsProvider>.value(value: widget.settings),
+      ],
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (BuildContext context, ThemeState themeState) =>
+            BlocBuilder<LocaleBloc, LocaleState>(
+              builder: (BuildContext context, LocaleState localeState) =>
+                  DynamicColorBuilder(
+                    builder:
+                        (ColorScheme? lightDynamic, ColorScheme? darkDynamic) =>
+                            MaterialApp(
+                              onGenerateTitle: (BuildContext context) =>
+                                  L10N.of(context).tr.appName,
+                              home: const DashboardScreen(),
+                              theme: getTheme(
+                                themeState.theme,
+                                lightDynamic,
+                                darkDynamic,
+                              ),
+                              localizationsDelegates: const [
+                                L10N.delegate,
+                                GlobalMaterialLocalizations.delegate,
+                                GlobalWidgetsLocalizations.delegate,
+                                GlobalCupertinoLocalizations.delegate,
+                              ],
+                              locale: localeState.locale,
+                              supportedLocales: const [
+                                Locale('en'),
+                                Locale('ar'),
+                                Locale('cs'),
+                                Locale('da'),
+                                Locale('de'),
+                                Locale('es'),
+                                Locale('fr'),
+                                Locale('hi'),
+                                Locale('id'),
+                                Locale('it'),
+                                Locale('ja'),
+                                Locale('ko'),
+                                Locale('nb', 'NO'),
+                                Locale('pt'),
+                                Locale('ru'),
+                                Locale('tr'),
+                                Locale('zh', 'CN'),
+                                Locale('zh', 'TW'),
+                              ],
+                            ),
+                  ),
+            ),
+      ),
+    );
   }
 }
