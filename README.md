@@ -77,6 +77,12 @@ samples, guidance on mobile development, and a full API reference.
 
 After [installing and setting up Flutter](https://docs.flutter.dev/get-started/install) (ideally its latest stable version) and downloading the Time Cop code, you should be able to simply [build and run](https://docs.flutter.dev/get-started/test-drive#run-the-app) this Flutter project, at least for mobile platforms. For more information, see the `CONTRIBUTING.md` file.
 
+### Releasing
+
+1. Raise `version:` in `pubspec.yaml` (e.g. `1.1.0+2`; the number after `+` is the Android version code and must increase with every release).
+2. In `CHANGELOG.md`, move the `[Unreleased]` entries to a new `## [1.1.0] - <date>` section, and merge to `master`.
+3. Either run the [Dart workflow](https://github.com/twohardthings/timecopfork/actions/workflows/dart.yml) manually on `master` with **Publish a release** ticked, or push a tag `v1.1.0`. CI builds the signed APK, creates the tag (for a manual run) and publishes the GitHub Release with the changelog section as release notes.
+
 ### Localizations
 
 Translations are handled using [Project Fluent](https://projectfluent.org/) and live in the [`l10n/`](l10n/) folder, one `.flt` file per language. If you notice an incorrect string or want to add a language, please open a pull request. (The original project's Weblate translates the original app, not this fork.)
