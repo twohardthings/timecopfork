@@ -21,32 +21,44 @@ import 'package:timecop/screens/about/AboutScreen.dart';
 // material_ui), so the About screen threw "No Material widget found" /
 // "No MaterialLocalizations found" and rendered nothing.
 void main() {
-  testWidgets('About screen, README page and licenses page render',
-      (tester) async {
+  testWidgets('About screen, README page and licenses page render', (
+    tester,
+  ) async {
     tester.view.physicalSize = const Size(1080, 2340);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(tester.view.reset);
     PackageInfo.setMockInitialValues(
-        appName: 'Time Cop',
-        packageName: 'io.github.twohardthings.timecop',
-        version: '1.8.1',
-        buildNumber: '45',
-        buildSignature: '');
+      appName: 'Time Cop',
+      packageName: 'io.github.twohardthings.timecop',
+      version: '1.8.1',
+      buildNumber: '45',
+      buildSignature: '',
+    );
 
     final settings = MockSettingsProvider();
     final data = MockDataProvider(const Locale('en'));
-    final notifications =
-        NotificationsProvider(FlutterLocalNotificationsPlugin());
-    await tester.pumpWidget(MultiBlocProvider(providers: [
-      BlocProvider<ThemeBloc>(create: (_) => ThemeBloc(settings)),
-      BlocProvider<LocaleBloc>(create: (_) => LocaleBloc(settings)),
-      BlocProvider<SettingsBloc>(create: (_) => SettingsBloc(settings, data)),
-      BlocProvider<TimersBloc>(
-          create: (_) => TimersBloc(data, settings, notifications)),
-      BlocProvider<ProjectsBloc>(create: (_) => ProjectsBloc(data)),
-      BlocProvider<NotificationsBloc>(
-          create: (_) => NotificationsBloc(notifications)),
-    ], child: app.TimeCopApp(settings: settings)));
+    final notifications = NotificationsProvider(
+      FlutterLocalNotificationsPlugin(),
+    );
+    await tester.pumpWidget(
+      MultiBlocProvider(
+        providers: [
+          BlocProvider<ThemeBloc>(create: (_) => ThemeBloc(settings)),
+          BlocProvider<LocaleBloc>(create: (_) => LocaleBloc(settings)),
+          BlocProvider<SettingsBloc>(
+            create: (_) => SettingsBloc(settings, data),
+          ),
+          BlocProvider<TimersBloc>(
+            create: (_) => TimersBloc(data, settings, notifications),
+          ),
+          BlocProvider<ProjectsBloc>(create: (_) => ProjectsBloc(data)),
+          BlocProvider<NotificationsBloc>(
+            create: (_) => NotificationsBloc(notifications),
+          ),
+        ],
+        child: app.TimeCopApp(settings: settings),
+      ),
+    );
     for (var i = 0; i < 10; i++) {
       await tester.pump(const Duration(milliseconds: 100));
     }
@@ -65,6 +77,14 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.text('v1.8.1+45'), findsOneWidget);
     expect(find.text('Readme'), findsOneWidget);
+    // the fork's copyright line below the original one; no link to the
+    // original project's Weblate
+    expect(
+      find.textContaining('Time Cop Fork © twohardthings'),
+      findsOneWidget,
+    );
+    expect(find.text('Translate'), findsNothing);
+    expect(find.text('Source Code'), findsOneWidget);
 
     await tester.tap(find.text('Readme'));
     await settle();

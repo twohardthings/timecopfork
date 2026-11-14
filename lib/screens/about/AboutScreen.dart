@@ -20,6 +20,8 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:timecop/l10n.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+const String _forkLegalese = "Time Cop Fork © twohardthings, 2026";
+
 class AboutScreen extends StatelessWidget {
   const AboutScreen({Key? key}) : super(key: key);
 
@@ -53,8 +55,10 @@ class _AboutContent extends StatelessWidget {
     final name =
         context.findAncestorWidgetOfExactType<Title>()?.title ?? tr.appName;
     final version = "v${packageInfo.version}+${packageInfo.buildNumber}";
+    // The original (translated) copyright notice, plus the fork's own line
+    final legalese = "${tr.appLegalese}\n$_forkLegalese";
     Widget icon({double height = 100}) => SvgPicture.asset(
-      "icon.no-bg.cyan.svg",
+      "icon.no-bg.color.svg",
       semanticsLabel: tr.logoSemantics,
       height: height,
     );
@@ -99,7 +103,7 @@ class _AboutContent extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 18),
                 child: Text(
-                  tr.appLegalese,
+                  legalese,
                   style: theme.textTheme.bodySmall,
                   textAlign: TextAlign.center,
                 ),
@@ -125,17 +129,11 @@ class _AboutContent extends StatelessWidget {
           FontAwesomeIcons.userAstronaut,
         ),
         ListTile(
-          leading: const FaIcon(FontAwesomeIcons.globe),
-          title: Text(tr.translate),
-          onTap: () => launchUrl(
-            Uri.parse("https://hosted.weblate.org/projects/timecop/"),
-          ),
-        ),
-        ListTile(
           leading: const FaIcon(FontAwesomeIcons.code),
           title: Text(tr.sourceCode),
-          onTap: () =>
-              launchUrl(Uri.parse("https://github.com/hamaluik/timecop")),
+          onTap: () => launchUrl(
+            Uri.parse("https://github.com/twohardthings/timecopfork"),
+          ),
         ),
         ListTile(
           leading: const FaIcon(FontAwesomeIcons.scroll),
@@ -146,7 +144,7 @@ class _AboutContent extends StatelessWidget {
             applicationName: name,
             applicationVersion: version,
             applicationIcon: icon(height: 48),
-            applicationLegalese: tr.appLegalese,
+            applicationLegalese: legalese,
           ),
         ),
       ],
@@ -216,10 +214,7 @@ class _MarkdownPageState extends State<MarkdownPage> {
     return MarkdownStyleSheet(
       p: body,
       // colour only, so links inside headings keep the heading's size
-      a: TextStyle(
-        color: colors.primary,
-        decoration: TextDecoration.underline,
-      ),
+      a: TextStyle(color: colors.primary, decoration: TextDecoration.underline),
       h1: text.headlineSmall,
       h2: text.titleLarge,
       h3: text.titleMedium,
