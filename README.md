@@ -21,12 +21,13 @@ Compared to the original, the fork:
 * has its own Android application ID (`io.github.twohardthings.timecopfork`) and name ("Time Cop Fork"), so it installs **alongside** the original app instead of replacing it. Data is not shared: export the database in the original app and import it in the fork to move your entries over
 * uses its own version numbers, starting again at 1.0.0
 * requires Android 7.0 (API 24) or newer
+* supports **Android only** for now. The iOS, macOS and Linux project files are still the original's; they are not built, tested or released by this fork
 
 All changes are listed in the [changelog](CHANGELOG.md). Credit for the app itself goes to Kenton Hamaluik and the [original contributors](CONTRIBUTORS.md).
 
 ## Download
 
-The fork is not available in any app store yet. An Android APK is built automatically for every change on `master`:
+The fork is Android-only and not available in any app store yet. An APK is built automatically for every change on `master`:
 
 1. Open the latest successful run of the [Dart workflow](https://github.com/twohardthings/timecopfork/actions/workflows/dart.yml?query=branch%3Amaster) (you need to be signed in to GitHub).
 2. Download the `timecop-…` file under **Artifacts** and unzip it.
