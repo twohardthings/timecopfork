@@ -58,7 +58,7 @@ class _AboutContent extends StatelessWidget {
     // The original (translated) copyright notice, plus the fork's own line
     final legalese = "${tr.appLegalese}\n$_forkLegalese";
     Widget icon({double height = 100}) => SvgPicture.asset(
-      "icon.no-bg.cyan.svg",
+      "icon.no-bg.color.svg",
       semanticsLabel: tr.logoSemantics,
       height: height,
     );

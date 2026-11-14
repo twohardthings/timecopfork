@@ -15,6 +15,7 @@ restart at 1.0.0 (version code 1).
 ### Changed
 * New Android application ID (`io.github.twohardthings.timecopfork`): installs
   alongside the original Time Cop instead of replacing it
+* Purple app icon, to tell the fork apart from the original (cyan) app
 * Updated to Flutter 3.50 and current dependencies, Gradle 9.5, Android Gradle
   Plugin 9.3 and Kotlin 2.4
 * Requires Android 7.0 (API 24) or newer

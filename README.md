@@ -1,7 +1,7 @@
 <h1 align="center">
   Time Cop Fork
   <br>
-  <a href="https://github.com/twohardthings/timecopfork"><img alt="icon" width="128" height="128" src="icon.no-bg.cyan.svg"></a>
+  <a href="https://github.com/twohardthings/timecopfork"><img alt="icon" width="128" height="128" src="icon.no-bg.color.svg"></a>
 </h1>
 <div align="center">
   A time tracking app that respects your privacy and gets the job done without getting too fancy.

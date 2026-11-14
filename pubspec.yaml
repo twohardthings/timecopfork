@@ -81,7 +81,7 @@ flutter:
     - CHANGELOG.md
     - CONTRIBUTORS.md
     - icon.no-bg.svg
-    - icon.no-bg.cyan.svg
+    - icon.no-bg.color.svg
     - fonts/LICENSE-PublicSans.md
     - fonts/OFL-PublicSans.txt
     - l10n/
