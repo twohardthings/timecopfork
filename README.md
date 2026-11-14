@@ -27,11 +27,9 @@ All changes are listed in the [changelog](CHANGELOG.md). Credit for the app itse
 
 ## Download
 
-The fork is Android-only and not available in any app store yet. An APK is built automatically for every change on `master`:
+The fork is Android-only and not available in any app store yet. Download the APK from the [latest release](https://github.com/twohardthings/timecopfork/releases/latest) (`timecopfork-<version>.apk` under **Assets**) and install it on your device. Android asks you to allow installing apps from your browser or file manager the first time. To update, install the newer release's APK over the old one; your data is kept.
 
-1. Open the latest successful run of the [Dart workflow](https://github.com/twohardthings/timecopfork/actions/workflows/dart.yml?query=branch%3Amaster) (you need to be signed in to GitHub).
-2. Download the `timecop-…` file under **Artifacts** and unzip it.
-3. Install `app-release.apk` on your device.
+Development builds: every change on `master` also produces an APK, attached to the [Dart workflow](https://github.com/twohardthings/timecopfork/actions/workflows/dart.yml?query=branch%3Amaster) run under **Artifacts** (you need to be signed in to GitHub).
 
 ## Motivation
 

@@ -5,11 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.0.0] - 2026-11-14
 First release of **Time Cop Fork**, a fork of Time Cop 1.8.1. Version numbers
 restart at 1.0.0 (version code 1).
 
 ### Added
-* Release APK built by CI for every change on `master`
+* Release APK built by CI for every change on `master`, and GitHub Releases
+  with the signed APK for every version tag
 * App name "Time Cop Fork", with "Fork" translated in every supported language
 
 ### Changed
@@ -174,7 +177,8 @@ Thanks to all the Hacktoberfest participants, translators, and other volunteers 
 * Ability to export database file
 * Ability to export csv of filtered data
 
-[Unreleased]: https://github.com/twohardthings/timecopfork/commits/master
+[Unreleased]: https://github.com/twohardthings/timecopfork/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/twohardthings/timecopfork/releases/tag/v1.0.0
 [1.8.0]: https://github.com/hamaluik/timecop/compare/v1.7.2...v1.8.0
 [1.7.2]: https://github.com/hamaluik/timecop/compare/v1.7.1...v1.7.2
 [1.7.1]: https://github.com/hamaluik/timecop/compare/v1.7.0...v1.7.1

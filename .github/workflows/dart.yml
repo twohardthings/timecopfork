@@ -8,6 +8,9 @@ name: Dart
 on:
   push:
     branches: [ "master" ]
+    # Pushing a version tag (e.g. v1.0.0) builds the signed APK and publishes
+    # it as a GitHub Release.
+    tags: [ "v*" ]
   pull_request:
     branches: [ "master" ]
   workflow_dispatch:
@@ -42,11 +45,14 @@ jobs:
         run: flutter test
 
   # Builds a release APK for every push to master (or a manual run) and
-  # attaches it to the workflow run as a downloadable artifact.
+  # attaches it to the workflow run as a downloadable artifact. For a version
+  # tag (v*), it also publishes a GitHub Release with the APK.
   apk:
     needs: build
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-24.04
+    permissions:
+      contents: write  # create the GitHub Release for version tags
 
     steps:
       - uses: actions/checkout@v5
@@ -73,6 +79,10 @@ jobs:
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           if [ -z "$ANDROID_KEYSTORE_BASE64" ]; then
+            if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+              echo "::error::Signing secrets not set; a release must be signed with the release key."
+              exit 1
+            fi
             echo "::warning::Signing secrets not set; the APK will be signed with the debug key."
             exit 0
           fi
@@ -110,6 +120,17 @@ jobs:
                   f.write(f"{key}={escape(value)}\n")
           PY
 
+      # A version tag must match the version in pubspec.yaml (v1.2.3 <-> 1.2.3+N).
+      - name: Check tag matches pubspec version
+        if: github.ref_type == 'tag'
+        run: |
+          version=$(sed -n 's/^version: *\([^+ ]*\).*/\1/p' pubspec.yaml)
+          if [ "${GITHUB_REF_NAME}" != "v${version}" ]; then
+            echo "::error::Tag ${GITHUB_REF_NAME} does not match pubspec.yaml version ${version}."
+            exit 1
+          fi
+          echo "VERSION=${version}" >> "$GITHUB_ENV"
+
       - name: Build release APK
         run: flutter build apk --release
 
@@ -119,3 +140,35 @@ jobs:
           name: timecop-${{ github.sha }}
           path: build/app/outputs/flutter-apk/app-release.apk
           if-no-files-found: error
+
+      # Release notes are the version's section of CHANGELOG.md, up to the
+      # next "## [" heading or the "---" separator.
+      - name: Prepare release
+        if: github.ref_type == 'tag'
+        run: |
+          cp build/app/outputs/flutter-apk/app-release.apk "timecopfork-${VERSION}.apk"
+          python3 - <<'PY'
+          import os, re, sys
+          version = os.environ["VERSION"]
+          lines = open("CHANGELOG.md", encoding="utf-8").read().splitlines()
+          start = next((i for i, l in enumerate(lines)
+                        if re.match(rf"## \[{re.escape(version)}\]", l)), None)
+          if start is None:
+              sys.exit(f"::error::CHANGELOG.md has no section for {version}")
+          notes = []
+          for line in lines[start + 1:]:
+              if line.startswith("## [") or line.strip() == "---":
+                  break
+              notes.append(line)
+          open("release-notes.md", "w", encoding="utf-8").write("\n".join(notes).strip() + "\n")
+          PY
+          cat release-notes.md
+
+      - name: Publish GitHub Release
+        if: github.ref_type == 'tag'
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Time Cop Fork ${{ env.VERSION }}
+          body_path: release-notes.md
+          files: timecopfork-${{ env.VERSION }}.apk
+          fail_on_unmatched_files: true
