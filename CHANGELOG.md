@@ -5,6 +5,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+First release of **Time Cop Fork**, a fork of Time Cop 1.8.1. Version numbers
+restart at 1.0.0 (version code 1).
+
+### Added
+* Release APK built by CI for every change on `master`
+* App name "Time Cop Fork", with "Fork" translated in every supported language
+
+### Changed
+* New Android application ID (`io.github.twohardthings.timecopfork`): installs
+  alongside the original Time Cop instead of replacing it
+* Updated to Flutter 3.50 and current dependencies, Gradle 9.5, Android Gradle
+  Plugin 9.3 and Kotlin 2.4
+* Requires Android 7.0 (API 24) or newer
+* Rebuilt the About screen
+
+### Fixed
+* Black screen on startup in release builds
+* Start Time, End Time and Duration pickers not opening
+* About screen not showing
+* Badge counts not requesting notification permission on iOS
+* File import and export on macOS
+
+---
+
+The entries below are from the original Time Cop project. Its version numbers
+are unrelated to Time Cop Fork's.
 
 ## [1.8.1] - 2022-11-22
 ### Added
@@ -146,7 +172,7 @@ Thanks to all the Hacktoberfest participants, translators, and other volunteers 
 * Ability to export database file
 * Ability to export csv of filtered data
 
-[Unreleased]: https://github.com/hamaluik/timecop/compare/v1.8.0...HEAD
+[Unreleased]: https://github.com/twohardthings/timecopfork/commits/master
 [1.8.0]: https://github.com/hamaluik/timecop/compare/v1.7.2...v1.8.0
 [1.7.2]: https://github.com/hamaluik/timecop/compare/v1.7.1...v1.7.2
 [1.7.1]: https://github.com/hamaluik/timecop/compare/v1.7.0...v1.7.1
