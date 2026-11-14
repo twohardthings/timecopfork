@@ -13,7 +13,14 @@ on:
     tags: [ "v*" ]
   pull_request:
     branches: [ "master" ]
+  # Manual run (Actions tab -> Dart -> Run workflow). With "release" ticked on
+  # master, it tags v<pubspec version> and publishes the GitHub Release.
   workflow_dispatch:
+    inputs:
+      release:
+        description: "Publish a release (tag v<pubspec version> on master)"
+        type: boolean
+        default: false
 
 jobs:
   build:
@@ -46,13 +53,14 @@ jobs:
 
   # Builds a release APK for every push to master (or a manual run) and
   # attaches it to the workflow run as a downloadable artifact. For a version
-  # tag (v*), it also publishes a GitHub Release with the APK.
+  # tag (v*) or a manual run with "release" ticked, it also publishes a GitHub
+  # Release with the APK.
   apk:
     needs: build
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-24.04
     permissions:
-      contents: write  # create the GitHub Release for version tags
+      contents: write  # create the release tag and GitHub Release
 
     steps:
       - uses: actions/checkout@v5
@@ -69,6 +77,40 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # Decides whether this run publishes a release, and for which version:
+      # - a pushed tag v1.2.3 must match pubspec.yaml version 1.2.3+N
+      # - a manual run with "release" ticked must be on master, and the tag
+      #   v<pubspec version> must not exist yet
+      - name: Determine release
+        env:
+          RELEASE_INPUT: ${{ inputs.release }}
+        run: |
+          version=$(sed -n 's/^version: *\([^+ ]*\).*/\1/p' pubspec.yaml)
+          release=false
+          if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            if [ "$GITHUB_REF_NAME" != "v$version" ]; then
+              echo "::error::Tag $GITHUB_REF_NAME does not match pubspec.yaml version $version."
+              exit 1
+            fi
+            release=true
+          elif [ "$GITHUB_EVENT_NAME" = "workflow_dispatch" ] && [ "$RELEASE_INPUT" = "true" ]; then
+            if [ "$GITHUB_REF" != "refs/heads/master" ]; then
+              echo "::error::Releases can only be made from master (this run is on $GITHUB_REF_NAME)."
+              exit 1
+            fi
+            if git ls-remote --exit-code --tags origin "refs/tags/v$version" >/dev/null; then
+              echo "::error::Tag v$version already exists. Raise the version in pubspec.yaml first."
+              exit 1
+            fi
+            release=true
+          fi
+          echo "Release: $release (version $version)"
+          {
+            echo "IS_RELEASE=$release"
+            echo "VERSION=$version"
+            echo "TAG=v$version"
+          } >> "$GITHUB_ENV"
+
       # Optional: sign with the release key when these repository secrets are
       # set. Without them the APK is signed with the debug key.
       - name: Configure release signing
@@ -79,7 +121,7 @@ jobs:
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           if [ -z "$ANDROID_KEYSTORE_BASE64" ]; then
-            if [ "$GITHUB_REF_TYPE" = "tag" ]; then
+            if [ "$IS_RELEASE" = "true" ]; then
               echo "::error::Signing secrets not set; a release must be signed with the release key."
               exit 1
             fi
@@ -120,17 +162,6 @@ jobs:
                   f.write(f"{key}={escape(value)}\n")
           PY
 
-      # A version tag must match the version in pubspec.yaml (v1.2.3 <-> 1.2.3+N).
-      - name: Check tag matches pubspec version
-        if: github.ref_type == 'tag'
-        run: |
-          version=$(sed -n 's/^version: *\([^+ ]*\).*/\1/p' pubspec.yaml)
-          if [ "${GITHUB_REF_NAME}" != "v${version}" ]; then
-            echo "::error::Tag ${GITHUB_REF_NAME} does not match pubspec.yaml version ${version}."
-            exit 1
-          fi
-          echo "VERSION=${version}" >> "$GITHUB_ENV"
-
       - name: Build release APK
         run: flutter build apk --release
 
@@ -144,7 +175,7 @@ jobs:
       # Release notes are the version's section of CHANGELOG.md, up to the
       # next "## [" heading or the "---" separator.
       - name: Prepare release
-        if: github.ref_type == 'tag'
+        if: env.IS_RELEASE == 'true'
         run: |
           cp build/app/outputs/flutter-apk/app-release.apk "timecopfork-${VERSION}.apk"
           python3 - <<'PY'
@@ -164,10 +195,14 @@ jobs:
           PY
           cat release-notes.md
 
+      # For a manual release this also creates the tag, on the commit that was
+      # built. (Tags created with the workflow's token don't start another run.)
       - name: Publish GitHub Release
-        if: github.ref_type == 'tag'
+        if: env.IS_RELEASE == 'true'
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ env.TAG }}
+          target_commitish: ${{ github.sha }}
           name: Time Cop Fork ${{ env.VERSION }}
           body_path: release-notes.md
           files: timecopfork-${{ env.VERSION }}.apk
