@@ -1,20 +1,40 @@
 <h1 align="center">
   Time Cop Fork
   <br>
-  <a href="https://timecop.apps.hamaluik.ca/"><img alt="icon" width="128" height="128" src="icon.no-bg.cyan.svg"></a>
+  <a href="https://github.com/twohardthings/timecopfork"><img alt="icon" width="128" height="128" src="icon.no-bg.cyan.svg"></a>
 </h1>
 <div align="center">
   A time tracking app that respects your privacy and gets the job done without getting too fancy.
 </div>
 <br />
 <div align="center">
-  <img alt="GitHub" src="https://img.shields.io/github/license/hamaluik/timecop?style=flat-square">
-  <a href="https://hosted.weblate.org/engage/timecop/">
-    <img src="https://hosted.weblate.org/widgets/timecop/-/svg-badge.svg" alt="Translation status" />
-  </a>
+  <img alt="License" src="https://img.shields.io/github/license/twohardthings/timecopfork?style=flat-square">
 </div>
 
+## About this fork
+
+_Time Cop Fork_ is a fork of [Time Cop](https://github.com/hamaluik/timecop) by Kenton Hamaluik. The original's last release was 1.8.1 (November 2022), and it no longer builds with current versions of Flutter and Android. This fork keeps the app working and maintains it from here.
+
+Compared to the original, the fork:
+
+* builds with the current stable Flutter and Android toolchain, with updated dependencies
+* has its own Android application ID (`io.github.twohardthings.timecopfork`) and name ("Time Cop Fork"), so it installs **alongside** the original app instead of replacing it. Data is not shared: export the database in the original app and import it in the fork to move your entries over
+* uses its own version numbers, starting again at 1.0.0
+* requires Android 7.0 (API 24) or newer
+
+All changes are listed in the [changelog](CHANGELOG.md). Credit for the app itself goes to Kenton Hamaluik and the [original contributors](CONTRIBUTORS.md).
+
+## Download
+
+The fork is not available in any app store yet. An Android APK is built automatically for every change on `master`:
+
+1. Open the latest successful run of the [Dart workflow](https://github.com/twohardthings/timecopfork/actions/workflows/dart.yml?query=branch%3Amaster) (you need to be signed in to GitHub).
+2. Download the `timecop-…` file under **Artifacts** and unzip it.
+3. Install `app-release.apk` on your device.
+
 ## Motivation
+
+_From the original author:_
 
 I'd rather not do time-tracking at all, but since its a necessity for my work, it's either use an app or keep track of things manually (which I'm terrible at). There are many time tracking apps on the app stores (and I have tried several of them), but each of them has at least one pain point that eventually drives me off—some cost more money than I think they should, others have (what I consider) poorly designed interfaces, some are way too complicated, some don't export data easily, most require an internet connection, I have privacy concerns with a large number of them, etc, etc.
 
@@ -23,7 +43,7 @@ Time tracking in and of itself is rather straightforward (hence all the apps on 
 ## Features
 
 * Offline-only, mobile-first
-* For Android ([Google Play](https://play.google.com/store/apps/details?id=ca.hamaluik.timecop), [F-Droid](https://f-droid.org/packages/ca.hamaluik.timecop/)), [iOS](https://apps.apple.com/us/app/time-cop/id1500711020), and [Linux](https://flathub.org/apps/details/ca.hamaluik.Timecop)
+* For Android (the fork; see [Download](#download)). The original Time Cop is also available for Android ([Google Play](https://play.google.com/store/apps/details?id=ca.hamaluik.timecop), [F-Droid](https://f-droid.org/packages/ca.hamaluik.timecop/)), [iOS](https://apps.apple.com/us/app/time-cop/id1500711020), and [Linux](https://flathub.org/apps/details/ca.hamaluik.Timecop)
 * Fully private—there is no tracking / spying / advertising / etc
 * Keep track of tasks with multiple parallel timers that can be started with the tap of a button
 * Associate timers with projects to group your work (or don't)
@@ -40,11 +60,11 @@ Time tracking in and of itself is rather straightforward (hence all the apps on 
     <img alt="Screenshot" src="screenshots/ios/dark/en/iPhone Xs Max-Portrait-dashboard.jpg" height="480"> <img alt="Screenshot" src="screenshots/ios/dark/en/iPhone Xs Max-Portrait-editor.jpg" height="480"> <img alt="Screenshot" src="screenshots/ios/dark/en/iPhone Xs Max-Portrait-projects.jpg" height="480"> <img alt="Screenshot" src="screenshots/ios/dark/en/iPhone Xs Max-Portrait-export.jpg" height="480"> <img alt="Screenshot" src="screenshots/ios/dark/en/iPhone Xs Max-Portrait-about.jpg" height="480">
 </div>
 
-More screenshots (including dark-mode and localization demonstrations) are available in the [screenshots/](screenshots/) folder.
+These screenshots are from the original Time Cop. More (including dark-mode and localization demonstrations) are available in the [screenshots/](screenshots/) folder.
 
 ## Contributing
 
-I'm happy to take bug reports and pull requests if you want to help improve _Time Cop_, but I fundamentally want to keep this app relatively small and simple. If that's not for you, there's [plenty](https://toggl.com/) of [other](https://clockify.me/) [options](https://www.workpuls.com/) [out](https://www.manictime.com/) [there](https://trackabi.com/).
+Bug reports and pull requests for the fork are welcome in [this repository](https://github.com/twohardthings/timecopfork/issues). In the spirit of the original, the app should stay relatively small and simple. If that's not for you, there's [plenty](https://toggl.com/) of [other](https://clockify.me/) [options](https://www.workpuls.com/) [out](https://www.manictime.com/) [there](https://trackabi.com/).
 
 The app is created pretty much entirely in [Dart](https://dart.dev/) using [Flutter](https://flutter.dev/), and I tried to make heavy use of the [Bloc](https://bloclibrary.dev/#/) pattern.
 
@@ -60,9 +80,9 @@ After [installing and setting up Flutter](https://docs.flutter.dev/get-started/i
 
 ### Localizations
 
-You can help translate Time Cop on [Weblate](https://hosted.weblate.org/projects/timecop/). If you notice any incorrect strings, feel free to correct them. Similarly, if you want to add a language, please do!
+Translations are handled using [Project Fluent](https://projectfluent.org/) and live in the [`l10n/`](l10n/) folder, one `.flt` file per language. If you notice an incorrect string or want to add a language, please open a pull request. (The original project's Weblate translates the original app, not this fork.)
 
-Translations are handled using [Project Fluent](https://projectfluent.org/). Currently all translations except English, Italian, Czech, Norwegian, and Indonesian were auto-translated by [Google Translate](https://cloud.google.com/translate) using my [Translate Tool](https://github.com/hamaluik/translatetool).
+All translations except English, Italian, Czech, Norwegian, and Indonesian were originally auto-translated by [Google Translate](https://cloud.google.com/translate) using the original author's [Translate Tool](https://github.com/hamaluik/translatetool).
 
 ## Todo
 
