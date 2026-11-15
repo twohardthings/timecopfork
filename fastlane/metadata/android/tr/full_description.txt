@@ -1,11 +1,18 @@
-- Yalnızca çevrimdışı, mobil öncelikli
-- Android, iOS ve Linux için
-- Tamamen özel - izleme / casusluk / reklam / vb. yok
-- Bir düğmeye dokunarak başlatılabilen birden fazla paralel zamanlayıcı ile görevleri takip etme
-- Çalışmalarınızı gruplandırmak için zamanlayıcıları projelerle ilişkilendirin (veya ilişkilendirmeyin)
-- Zamanlayıcıları zahmetsizce başlatma, durdurma, düzenleme ve silme
-- Verileri zaman aralıklarına ve projelere göre filtrelenmiş bir .csv dosyası olarak dışa aktarın
-- Tüm verilere tam erişim için uygulamanın veritabanını dışa aktarın
-- Cihaz ayarlarınıza göre otomatik aydınlık mod / karanlık mod
-- Çeşitli dillerde yerelleştirilmiştir (Google Translate sayesinde): İngilizce, Arapça, Almanca, İspanyolca, Fransızca, Hintçe, Endonezce, Japonca, Korece, Portekizce, Rusça, Çince (Basitleştirilmiş) ve Çince (Geleneksel), ayrıca İtalyanca, Çekçe, Norveççe ve Endonezce (katkıda bulunanlar aracılığıyla)
-- Açık kaynak (Apache-2.0 altında lisanslı)-fork away (https://github.com/hamaluik/timecop)
+Zaman Polisi Çatalı, Kenton Hamaluik'in Time Cop 1.8.1 uygulamasının bakımı sürdürülen bir çatalıdır ve güncel Android sürümlerinde çalışmaya devam eder.
+
+Çatalda neler farklı:
+- Veritabanı içe aktarma Android 13 ve sonrasında çalışır. Çatal, Android'in kendi dosya seçicisini kullanır ve depolama izni gerektirmez. Orijinal uygulama, Android'in artık vermediği bir izin ister ve yalnızca depolama erişiminin gerekli olduğunu gösterir (https://github.com/hamaluik/timecop/issues/169).
+- Kendi uygulama kimliği vardır, bu yüzden orijinal uygulamanın yanına kurulur. Kayıtlarınızı taşımak için veritabanını orijinal uygulamada dışa aktarın ve çatalda içe aktarın.
+- Güncel Android sürümleri için güncellendi; iki uygulamayı ayırt etmek için mor bir simgesi var.
+
+Özellikler:
+- Yalnızca çevrimdışı, Android mobil cihazlar için
+- Tamamen gizli – izleme / casusluk / reklam / vb. yok
+- Bir düğmeye dokunarak başlatılabilen birden fazla paralel zamanlayıcı ile görevleri takip edin
+- Çalışmanızı gruplandırmak için zamanlayıcıları projelerle ilişkilendirin (veya ilişkilendirmeyin)
+- Zamanlayıcıları istediğiniz zaman zahmetsizce başlatın, durdurun, düzenleyin ve silin
+- Verileri zaman aralıklarına ve projelere göre filtrelenmiş .csv veya PDF dosyası olarak dışa aktarın
+- Tüm verilere tam erişim için uygulamanın veritabanını dışa ve içe aktarın
+- Cihaz ayarlarınıza göre otomatik aydınlık / karanlık mod
+- 18 dilde kullanılabilir, çoğu makine çevirisi
+- Açık kaynak (Apache-2.0 altında lisanslı): https://github.com/twohardthings/timecopfork

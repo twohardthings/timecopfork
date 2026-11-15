@@ -1,11 +1,18 @@
-Solo offline, mobile-first
-- Per Android, iOS e Linux
-- Completamente privato: non c'è tracciamento / spionaggio / pubblicità / ecc
-- Tieni traccia delle attività con più timer paralleli che possono essere avviati con il semplice tocco di un pulsante
+Time Cop Fork è un fork mantenuto di Time Cop 1.8.1 di Kenton Hamaluik, che continua a funzionare sulle versioni attuali di Android.
+
+Cosa cambia nel fork:
+- L'importazione di un database funziona su Android 13 e versioni successive. Il fork usa la finestra di selezione file di Android e non richiede l'autorizzazione di archiviazione. L'app originale chiede un'autorizzazione che Android non concede più e mostra solo «Accesso all'archiviazione richiesto» (https://github.com/hamaluik/timecop/issues/169).
+- Un proprio ID applicazione, quindi si installa accanto all'app originale. Per trasferire le tue voci, esporta il database nell'app originale e importalo nel fork.
+- Aggiornato per le versioni attuali di Android, con un'icona viola per distinguere le due app.
+
+Funzionalità:
+- Solo offline, pensato per dispositivi mobili Android
+- Completamente privato: niente tracciamento / spionaggio / pubblicità / ecc.
+- Tieni traccia delle attività con più timer paralleli avviabili con il semplice tocco di un pulsante
 - Associa i timer ai progetti per raggruppare il tuo lavoro (o non farlo)
 - Avvia, arresta, modifica ed elimina i timer in qualsiasi momento senza problemi
-- Esporta i dati come file .csv, filtrati per periodi e progetti
-- Esporta il database dell'app per un accesso completo a tutti i suoi dati
-- Modalità luce / modalità buio automatiche in base alle impostazioni del dispositivo
-- Localizzato in diverse lingue (grazie a Google Translate): inglese, arabo, tedesco, spagnolo, francese, hindi, indonesiano, giapponese, coreano, portoghese, russo, cinese (semplificato) e cinese (tradizionale), oltre che italiano, ceco, norvegese e indonesiano (tramite contributori)
-- Open source (con licenza Apache-2.0)—fork away (https://github.com/hamaluik/timecop)
+- Esporta i dati come file .csv o PDF, filtrati per periodi e progetti
+- Esporta e importa il database dell'app per un accesso completo a tutti i dati
+- Modalità chiara / scura automatica in base alle impostazioni del dispositivo
+- Disponibile in 18 lingue, la maggior parte tradotte automaticamente
+- Open source (con licenza Apache-2.0): https://github.com/twohardthings/timecopfork

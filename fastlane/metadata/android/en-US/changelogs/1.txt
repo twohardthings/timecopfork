@@ -1,0 +1,5 @@
+First release of Time Cop Fork, based on Time Cop 1.8.1:
+- Database import works on Android 13 and newer, without a storage permission
+- Own app ID: installs next to the original Time Cop. Export the database there and import it here to move your entries
+- Purple icon and the name "Time Cop Fork"
+- Updated for current Android versions (Android 7.0 or newer)

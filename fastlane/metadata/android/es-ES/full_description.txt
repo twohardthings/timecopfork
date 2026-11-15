@@ -1,11 +1,18 @@
-- Solo sin conexión, móvil primero
-- Para Android, iOS y Linux
-- Completamente privado: sin seguimiento, espionaje, publicidad, etc.
-- Realiza un seguimiento de tus tareas con múltiples temporizadores paralelos que se pueden iniciar con solo presionar un botón
-- Vincular cronómetros a proyectos para trabajar en grupo (o no)
-- Inicia, deten, edita y elimina los temporizadores cuando quieras sin problemas
-- Exportar los datos como un archivo .csv . Filtrado por duraciones y proyectos
-- Exportar la base de datos de la aplicación para acceder a tus datos completos
-- Modo claro/oscuro automático con la configuración del dispositivo
-- Diferentes idiomas (con Google Translate): Inglés, Árabe, Alemán, Español, Francés, Hindi, Indonesio, Japonés, Coreano, Portugués, Ruso, Chino (simplificado) y Chino (tradicional), además del Italiano, Checo, Noruego y también en idiomas indonesios a través de colaboradores
-- Código de fuente (bajo licencia Apache-2.0): siéntete libre de hacer una bifurcación (https://github.com/hamaluik/timecop)
+Time Cop (bifurcación) es una bifurcación mantenida de Time Cop 1.8.1 de Kenton Hamaluik, que sigue funcionando en las versiones actuales de Android.
+
+Qué cambia en la bifurcación:
+- Importar una base de datos funciona en Android 13 y posteriores. La bifurcación usa el diálogo de archivos de Android y no necesita permiso de almacenamiento. La aplicación original pide un permiso que Android ya no concede y solo muestra «Se requiere acceso al almacenamiento» (https://github.com/hamaluik/timecop/issues/169).
+- Su propio identificador de aplicación, así que se instala junto a la aplicación original. Para pasar tus entradas, exporta la base de datos en la aplicación original e impórtala en la bifurcación.
+- Actualizada para las versiones actuales de Android, con un icono morado para distinguir las dos aplicaciones.
+
+Funciones:
+- Solo sin conexión, pensada para móviles Android
+- Completamente privada: sin seguimiento, espionaje, publicidad, etc.
+- Haz un seguimiento de tus tareas con varios temporizadores en paralelo que se inician con solo tocar un botón
+- Vincula temporizadores a proyectos para agrupar tu trabajo (o no)
+- Inicia, detén, edita y elimina temporizadores cuando quieras, sin complicaciones
+- Exporta los datos como archivo .csv o PDF, filtrados por periodos y proyectos
+- Exporta e importa la base de datos de la aplicación para acceder a todos tus datos
+- Modo claro u oscuro automático según la configuración del dispositivo
+- Disponible en 18 idiomas, la mayoría traducidos automáticamente
+- Código abierto (con licencia Apache-2.0): https://github.com/twohardthings/timecopfork

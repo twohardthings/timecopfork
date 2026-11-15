@@ -1,10 +1,18 @@
-- Nur offline, nur auf Mobilgeräten (iOS / Android)
-- Komplette Privatsphäre - enthält kein Tracking / keine Werbung / etc
-- Mehrere Aufgaben gleichzeitig tracken durch parallele Timer, die jeweils mit einem Knopfdruck gestartet werden können
-- Timer mit Projekten verknüpfen um die Zeiten zu gruppieren
-- Alle Timer können jederzeit ohne großen Aufwand gestartet, gestoppt, editiert und gelöscht werden
-- Daten als CSV exportierbar, filterbar anhand einer Zeitspanne und Projekten
-- Für vollen Zugriff auf alle Daten kann die Datenbank der App exportiert werden
-- Automatisches dunkles bzw. helles Thema basierend auf den Geräteeinstellungen
-- In Zahlreiche Sprachen übersetzt (dank Google Übersetzer): Englisch, Arabisch, Deutsch, Spanisch, Französisch, Hindi, Indonesisch, Japanisch, Koreanisch, Portugiesisch, Russisch, Chinesisch (vereinfacht) und Chinesisch (traditionell), außerdem Italienisch, Tschechisch und Norwegisch (dank freiwilligen Helfern)
-- Quelloffen (unter Apache-2.0 lizenziert) kann unter https://github.com/hamaluik/timecop geforkt werden
+Time Cop Fork ist ein gepflegter Fork von Time Cop 1.8.1 von Kenton Hamaluik, der auf aktuellen Android-Versionen funktioniert.
+
+Was im Fork anders ist:
+- Der Datenbank-Import funktioniert unter Android 13 und neuer. Der Fork nutzt den Dateidialog von Android und braucht keine Speicherberechtigung. Die ursprüngliche App fragt nach einer Berechtigung, die Android nicht mehr vergibt, und zeigt nur „Speicherzugriff erforderlich“ (https://github.com/hamaluik/timecop/issues/169).
+- Eine eigene App-ID, daher lässt er sich neben der ursprünglichen App installieren. Um deine Einträge zu übernehmen, exportiere die Datenbank in der ursprünglichen App und importiere sie im Fork.
+- Aktualisiert für aktuelle Android-Versionen, mit einem violetten Symbol, um die beiden Apps zu unterscheiden.
+
+Funktionen:
+- Nur offline, für Mobilgeräte mit Android
+- Komplette Privatsphäre – kein Tracking, keine Werbung usw.
+- Mehrere Aufgaben gleichzeitig erfassen mit parallelen Timern, die sich jeweils mit einem Knopfdruck starten lassen
+- Timer mit Projekten verknüpfen, um die Zeiten zu gruppieren (oder auch nicht)
+- Timer jederzeit ohne großen Aufwand starten, stoppen, bearbeiten und löschen
+- Daten als CSV- oder PDF-Datei exportieren, gefiltert nach Zeitraum und Projekten
+- Die Datenbank der App exportieren und importieren, für vollen Zugriff auf alle Daten
+- Automatisch helles oder dunkles Design passend zu den Geräteeinstellungen
+- In 18 Sprachen verfügbar, die meisten maschinell übersetzt
+- Quelloffen (unter Apache-2.0 lizenziert): https://github.com/twohardthings/timecopfork
