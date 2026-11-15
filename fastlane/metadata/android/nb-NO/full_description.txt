@@ -1,10 +1,18 @@
-Kun frakoblet, kun for mobile operativsystemer (Android/iOS)
-Helt privat—ingen sporing/reklame/osv
-Hold øye med gjøremål med flere pågående tidsur som kan startes med ett knappetrykk
-Knytt tidsur til prosjekter for å gruppere arbeidet ditt
-Start, stopp, rediger og slett tidsur når som helst
-Eksporter data som en .csv-fil, filtrert som tidsrom og prosjekter
-Eksporter programmets database for full tilgang til dets data
-Automatisk lys/mørk drakt basert på enhetsinnstillinger
-Flere språk. Engelsk, arabisk, tysk, spansk, fransk, hindi, indonesisk, japansk, koreansk, portugisisk, russisk, forenklet kinesisk, tradisjonell kinesisk, og italiensk
-Fri kildekode, lisensiert Apache 2.0. Forgrein det som du vil https://github.com/hamaluik/timecop
+Time Cop Fork er en vedlikeholdt forgreining av Time Cop 1.8.1 av Kenton Hamaluik, som fortsatt fungerer på nåværende Android-versjoner.
+
+Hva som er annerledes i forgreiningen:
+- Import av databasen fungerer på Android 13 og nyere. Forgreiningen bruker Androids egen fildialog og trenger ingen lagringstillatelse. Det opprinnelige programmet ber om en tillatelse som Android ikke lenger gir, og viser bare at lagringstilgang kreves (https://github.com/hamaluik/timecop/issues/169).
+- Egen app-ID, så den kan installeres ved siden av det opprinnelige programmet. For å flytte oppføringene dine, eksporter databasen i det opprinnelige programmet og importer den i forgreiningen.
+- Oppdatert for nåværende Android-versjoner, med et lilla ikon for å skille de to programmene fra hverandre.
+
+Funksjoner:
+- Kun frakoblet, for mobile enheter med Android
+- Helt privat – ingen sporing / spionering / reklame / osv.
+- Hold øye med gjøremål med flere tidsur samtidig som startes med ett knappetrykk
+- Knytt tidsur til prosjekter for å gruppere arbeidet ditt (eller ikke)
+- Start, stopp, rediger og slett tidsur når som helst uten styr
+- Eksporter data som .csv- eller PDF-fil, filtrert etter tidsrom og prosjekter
+- Eksporter og importer programmets database for full tilgang til alle data
+- Automatisk lys / mørk drakt basert på enhetsinnstillingene
+- Tilgjengelig på 18 språk, de fleste maskinoversatt
+- Fri kildekode, lisensiert Apache-2.0: https://github.com/twohardthings/timecopfork

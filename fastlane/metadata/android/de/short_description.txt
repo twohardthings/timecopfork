@@ -1,1 +1,1 @@
-Eine Zeiterfassungs-App, die Deine Privatsphäre respektiert, ohne überladen zu sein.
+Zeiterfassung, die deine Privatsphäre respektiert, ohne überladen zu sein.

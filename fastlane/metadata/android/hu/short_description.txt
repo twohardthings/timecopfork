@@ -1,1 +1,1 @@
-Egy időkövető applikáció ami tiszteli a tiszteli a magánéletet, csícsa nélkül.
+Egy időkövető alkalmazás, amely tiszteli a magánéletet, csicsa nélkül.

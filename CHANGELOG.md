@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `arm64-v8a`.
 * The APKs no longer contain Google's encrypted "dependency metadata" block,
   which alternative app stores such as IzzyOnDroid don't accept.
+* Store listing (Fastlane metadata) describes the fork: name, description
+  in all 8 languages, purple icon and feature graphic, and a changelog for
+  version code 1.
 
 ### Fixed
 * Settings: the Language row shows the chosen language instead of always
@@ -44,6 +47,9 @@ restart at 1.0.0 (version code 1).
 * Rebuilt the About screen
 
 ### Fixed
+* Database import on Android 13 and newer: the file dialog no longer needs a
+  storage permission, which the original app asked for but Android no longer
+  grants (hamaluik/timecop#169, #120)
 * Black screen on startup in release builds
 * Start Time, End Time and Duration pickers not opening
 * About screen not showing

@@ -1,11 +1,18 @@
-- Offline-only, mobile-first
-- For Android, iOS, and Linux
+Time Cop Fork is a maintained fork of Time Cop 1.8.1 by Kenton Hamaluik, kept working on current Android versions.
+
+What's different in the fork:
+- Importing a database works on Android 13 and newer. The fork uses Android's own file dialog and needs no storage permission. The original app asks for a permission that Android no longer grants and only shows "Storage permission required" (https://github.com/hamaluik/timecop/issues/169).
+- Its own app ID, so it installs next to the original app. To move your entries, export the database in the original app and import it in the fork.
+- Updated for current Android versions, with a purple icon to tell the two apps apart.
+
+Features:
+- Offline-only, mobile-first, for Android
 - Fully private—there is no tracking / spying / advertising / etc
 - Keep track of tasks with multiple parallel timers that can be started with the tap of a button
 - Associate timers with projects to group your work (or don't)
 - Start, stop, edit, and delete timers whenever with no fuss
-- Export data as a .csv file, filtered by time-spans and projects
-- Export the app's database for full access to all of its data
+- Export data as a .csv or PDF file, filtered by time-spans and projects
+- Export and import the app's database for full access to all of its data
 - Automatic light mode / dark mode based on your device settings
-- Localized in several languages (thanks to Google Translate): English, Arabic, German, Spanish, French, Hindi, Indonesian, Japanese, Korean, Portuguese, Russian, Chinese (Simplified), and Chinese (Traditional), as well as Italian, Czech, Norwegian, and Indonesian (via contributors)
-- Open source (licensed under Apache-2.0)—fork away (https://github.com/hamaluik/timecop)
+- Available in 18 languages, most of them machine-translated
+- Open source (licensed under Apache-2.0): https://github.com/twohardthings/timecopfork

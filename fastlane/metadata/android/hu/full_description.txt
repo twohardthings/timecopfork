@@ -1,11 +1,18 @@
-- Csak offline, mobil-első
-- Android, iOS, és Linux-ra
-- Teljesen privát—nincs nyomonkövetés / kémkedés / reklámozás / stb.
-- Tartsa nyomon feladatiat több párhuzamos időzítővel, amiket gombnyomással lehet indítani
-- Kapcsoljon össze időzítőket projektekkel a munka csoportosításához (vagy mégse)
-- Indítson, állitson, szerkesszen, és töroljön időzítőket amikor akar, gond nélkül
-- Exportáljon adatokat .csv fájlként, időtartamok és projektként szűrve
-- Exportálja az app adatbázisát teljes adatai hozzáféréséhez
-- Automatikus fényes mód / sötét mód a készülék beállításaihoz megfelelően
-- Lokalizálva külömböző nyelvekben (Google Fordítóval): Angol, Arab, Német, Spanyol, Francia, Hindi, Indonéz, Japán, Koreai, Portugál, Orosz, Kínai (Egyszerűsített), és Kínai (Hagyományos), ezen kívül Olasz, Cseh, Norvég, és Indonéz nyelveken is hozzájárulókon keresztül
-- Nyílt forráskód (Apache-2.0 licenc alatt)—nyugodtan forkolható (https://github.com/hamaluik/timecop)
+A Time Cop Fork Kenton Hamaluik Time Cop 1.8.1 alkalmazásának karbantartott forkja, amely a jelenlegi Android-verziókon is működik.
+
+Miben más a fork:
+- Az adatbázis importálása működik Android 13-on és újabb verziókon. A fork az Android saját fájlválasztóját használja, és nincs szüksége tárhely-engedélyre. Az eredeti alkalmazás olyan engedélyt kér, amelyet az Android már nem ad meg, és csak azt jelzi, hogy tárhely-hozzáférés szükséges (https://github.com/hamaluik/timecop/issues/169).
+- Saját alkalmazásazonosító, így az eredeti alkalmazás mellé telepíthető. A bejegyzések átviteléhez exportálja az adatbázist az eredeti alkalmazásban, és importálja a forkban.
+- Frissítve a jelenlegi Android-verziókhoz, lila ikonnal, hogy a két alkalmazás megkülönböztethető legyen.
+
+Funkciók:
+- Csak offline, Androidos mobileszközökre
+- Teljesen privát – nincs nyomonkövetés / kémkedés / reklám / stb.
+- Kövesse nyomon feladatait több párhuzamos időzítővel, amelyeket egy gombnyomással indíthat
+- Kapcsolja az időzítőket projektekhez a munka csoportosításához (vagy ne)
+- Indítson, állítson le, szerkesszen és töröljön időzítőket bármikor, gond nélkül
+- Exportáljon adatokat .csv vagy PDF fájlként, időtartam és projektek szerint szűrve
+- Exportálja és importálja az alkalmazás adatbázisát az összes adat teljes eléréséhez
+- Automatikus világos / sötét mód a készülék beállításai szerint
+- 18 nyelven érhető el, többségük gépi fordítás
+- Nyílt forráskód (Apache-2.0 licenc alatt): https://github.com/twohardthings/timecopfork
