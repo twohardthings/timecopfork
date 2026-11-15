@@ -28,7 +28,23 @@ All changes are listed in the [changelog](CHANGELOG.md). Credit for the app itse
 
 ## Download
 
-The fork is Android-only and not available in any app store yet. Download the APK from the [latest release](https://github.com/twohardthings/timecopfork/releases/latest) (under **Assets**) and install it on your device. There is one APK per processor type:
+The fork is Android-only and is not in an app store. There are two ways to install it.
+
+### With Obtainium (recommended: automatic updates)
+
+[Obtainium](https://github.com/ImranR98/Obtainium) installs apps straight from their GitHub releases and notifies you of updates.
+
+[<img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="54">](https://apps.obtainium.imranr.dev/redirect?r=obtainium://add/https://github.com/twohardthings/timecopfork)
+
+1. Install Obtainium from its [releases](https://github.com/ImranR98/Obtainium/releases) or from F-Droid.
+2. On your phone, tap the badge above, or in Obtainium tap **Add App** and enter `https://github.com/twohardthings/timecopfork`.
+3. Tap **Install**. If Obtainium asks which APK to use, pick the one for your device (see below; usually `arm64-v8a`).
+
+Obtainium checks for new releases in the background; updates keep your data.
+
+### Manually
+
+Download the APK from the [latest release](https://github.com/twohardthings/timecopfork/releases/latest) (under **Assets**) and install it on your device. There is one APK per processor type:
 
 - `timecopfork-<version>-arm64-v8a.apk`: nearly all phones and tablets from the last years. Take this one if unsure.
 - `timecopfork-<version>-armeabi-v7a.apk`: older 32-bit devices.

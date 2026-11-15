@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+* README: how to install and update the app with Obtainium, straight from
+  the GitHub releases.
+
 ## [1.0.1] - 2026-11-15
 Downloads now come as one APK per processor type. Most phones need
 `timecopfork-1.0.1-arm64-v8a.apk`; older 32-bit devices need
