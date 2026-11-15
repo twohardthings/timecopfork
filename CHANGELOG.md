@@ -10,6 +10,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Unit, screen and golden tests for the whole app, run by CI with a coverage
   summary.
 
+### Changed
+* Releases have one APK per processor type (arm64-v8a, armeabi-v7a, x86_64)
+  instead of one universal APK, which was about 70 MB. Most devices need
+  `arm64-v8a`.
+* The APKs no longer contain Google's encrypted "dependency metadata" block,
+  which alternative app stores such as IzzyOnDroid don't accept.
+
 ### Fixed
 * Settings: the Language row shows the chosen language instead of always
   "Automatic" (#27).

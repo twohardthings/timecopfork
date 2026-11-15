@@ -27,9 +27,15 @@ All changes are listed in the [changelog](CHANGELOG.md). Credit for the app itse
 
 ## Download
 
-The fork is Android-only and not available in any app store yet. Download the APK from the [latest release](https://github.com/twohardthings/timecopfork/releases/latest) (`timecopfork-<version>.apk` under **Assets**) and install it on your device. Android asks you to allow installing apps from your browser or file manager the first time. To update, install the newer release's APK over the old one; your data is kept.
+The fork is Android-only and not available in any app store yet. Download the APK from the [latest release](https://github.com/twohardthings/timecopfork/releases/latest) (under **Assets**) and install it on your device. There is one APK per processor type:
 
-Development builds: every change on `master` also produces an APK, attached to the [Dart workflow](https://github.com/twohardthings/timecopfork/actions/workflows/dart.yml?query=branch%3Amaster) run under **Artifacts** (you need to be signed in to GitHub).
+- `timecopfork-<version>-arm64-v8a.apk`: nearly all phones and tablets from the last years. Take this one if unsure.
+- `timecopfork-<version>-armeabi-v7a.apk`: older 32-bit devices.
+- `timecopfork-<version>-x86_64.apk`: emulators and some Chromebooks.
+
+If Android says the app isn't compatible, try the next one. Android asks you to allow installing apps from your browser or file manager the first time. To update, install the newer release's APK over the old one; your data is kept.
+
+Development builds: every change on `master` also produces the APKs, attached to the [Dart workflow](https://github.com/twohardthings/timecopfork/actions/workflows/dart.yml?query=branch%3Amaster) run under **Artifacts** (you need to be signed in to GitHub).
 
 ## Motivation
 
