@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:timecop/models/theme_type.dart';
@@ -20,7 +21,8 @@ import '../helpers/fakes.dart';
 import '../helpers/pump_app.dart';
 
 // Renders the store and README screenshots into
-// fastlane/metadata/android/en-US/images/phoneScreenshots/.
+// fastlane/metadata/android/en-US/images/phoneScreenshots/, and the store's
+// feature graphic for every language in fastlane/metadata/android/*/images/.
 //
 // Skipped in normal test runs. To update the screenshots, run
 //   SCREENSHOTS=1 flutter test test/screenshots
@@ -94,6 +96,109 @@ void main() {
   );
   shot('7-export', screen: (_) => const ExportScreen());
   shot('8-settings', screen: (_) => SettingsScreen());
+
+  // The 1024 × 500 banner at the top of the store page, per language. The
+  // title comes from the language's title.txt.
+  const taglines = <String, String>{
+    'en-US': 'Simple private time tracking.',
+    'cs': 'Jednoduché a soukromé měření času.',
+    'de': 'Einfache, private Zeiterfassung.',
+    'es-ES': 'Control del tiempo sencillo y privado.',
+    'hu': 'Egyszerű, privát időkövetés.',
+    'it-IT': 'Semplice monitoraggio del tempo privato.',
+    'nb-NO': 'Enkel og privat tidsregistrering.',
+    'tr': 'Basit ve gizli zaman takibi.',
+  };
+  for (final entry in taglines.entries) {
+    testWidgets('feature graphic ${entry.key}', skip: !enabled, (tester) async {
+      final dir = 'fastlane/metadata/android/${entry.key}';
+      final title = File('$dir/title.txt').readAsStringSync().trim();
+      await _saveFeatureGraphic(
+        tester,
+        title,
+        entry.value,
+        '$dir/images/featureGraphic.png',
+      );
+    });
+  }
+}
+
+Future<void> _saveFeatureGraphic(
+  WidgetTester tester,
+  String title,
+  String tagline,
+  String path,
+) async {
+  tester.view.physicalSize = const Size(1024, 500);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+  const white = Color(0xFFFFFFFF);
+  await tester.pumpWidget(
+    RepaintBoundary(
+      key: appBoundaryKey,
+      child: Directionality(
+        textDirection: TextDirection.ltr,
+        child: ColoredBox(
+          color: const Color(0xFF263238),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 64),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // long titles (e.g. Spanish) shrink to fit
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset('icon.no-bg.color.svg', height: 88),
+                      const SizedBox(width: 22),
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontFamily: 'PublicSans',
+                          fontWeight: FontWeight.w700,
+                          fontSize: 92,
+                          color: white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 18),
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    tagline,
+                    style: const TextStyle(
+                      fontFamily: 'PublicSans',
+                      fontSize: 44,
+                      color: white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    ),
+  );
+  // the SVG loads asynchronously
+  for (var i = 0; i < 10; i++) {
+    await tester.runAsync(() => Future<void>.delayed(Duration.zero));
+    await tester.pump();
+  }
+  final boundary =
+      tester.renderObject(find.byKey(appBoundaryKey)) as RenderRepaintBoundary;
+  await tester.runAsync(() async {
+    final image = await boundary.toImage();
+    final png = await image.toByteData(format: ui.ImageByteFormat.png);
+    image.dispose();
+    final file = File(path);
+    await file.parent.create(recursive: true);
+    await file.writeAsBytes(png!.buffer.asUint8List());
+  });
 }
 
 /// Saves the whole app at the phone's resolution.

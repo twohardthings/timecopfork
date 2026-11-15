@@ -56,16 +56,9 @@ dependency_overrides:
 dev_dependencies:
   flutter_lints: ^2.0.3
   flutter_launcher_icons: ^0.13.1
-  flutter_driver:
-    sdk: flutter
   test: ^1.24.1
-  integration_test:
-    sdk: flutter
   flutter_test:
     sdk: flutter
-
-  #until screenshots updates on the package repo..
-  #screenshots: ^2.1.1
 
 flutter_icons:
   android: "launcher_icon"

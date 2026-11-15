@@ -21,6 +21,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   version code 1.
 * New store and README screenshots of the fork (light and dark), generated
   by a test so they can be updated with one command.
+* Store feature graphic ("Time Cop Fork" banner) in all 8 store languages,
+  rendered by the same test.
+
+### Removed
+* The original app's screenshots (`screenshots/`), Google Play graphics
+  (`store assets/`) and its screenshot tooling (`integration_test/`,
+  `test_driver/`, `screenshots.*.yaml`, and the `flutter_driver` and
+  `integration_test` dev dependencies). The store listing and screenshots
+  now live in `fastlane/metadata/`.
+* `TODO.md`, a finished checklist from the original app. The README's
+  "Todo" section now points to the GitHub issues.
 
 ### Fixed
 * Reports: the Weekly Hours chart had stray number axes on the top and
