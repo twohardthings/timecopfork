@@ -50,6 +50,22 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.byKey(const Key('weeklyTotals')), findsOneWidget);
     expect(find.text('Weekly Hours'), findsOneWidget);
+    // one date label per week, numbers only on the left and bottom
+    final titles = tester
+        .widget<LineChart>(find.byType(LineChart))
+        .data
+        .titlesData;
+    expect(titles.bottomTitles.sideTitles.interval, 1);
+    expect(
+      tester
+          .widget<LineChart>(find.byType(LineChart))
+          .data
+          .gridData
+          .verticalInterval,
+      1,
+    );
+    expect(titles.topTitles.sideTitles.showTitles, isFalse);
+    expect(titles.rightTitles.sideTitles.showTitles, isFalse);
 
     await nextPage(app);
     expect(tester.takeException(), isNull);

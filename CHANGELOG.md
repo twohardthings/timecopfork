@@ -19,8 +19,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Store listing (Fastlane metadata) describes the fork: name, description
   in all 8 languages, purple icon and feature graphic, and a changelog for
   version code 1.
+* New store and README screenshots of the fork (light and dark), generated
+  by a test so they can be updated with one command.
 
 ### Fixed
+* Reports: the Weekly Hours chart had stray number axes on the top and
+  right, repeated dates and wrapped labels when there were only a few weeks.
 * Settings: the Language row shows the chosen language instead of always
   "Automatic" (#27).
 * Reports and Export: "Select All" in the project list now updates the

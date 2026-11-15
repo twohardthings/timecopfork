@@ -223,7 +223,8 @@ class SettingsScreen extends StatelessWidget {
                 activeThumbColor: Theme.of(context).colorScheme.primary,
               ),
             ),
-            if (Platform.isIOS || Platform.isAndroid)
+            if (Theme.of(context).platform == TargetPlatform.iOS ||
+                Theme.of(context).platform == TargetPlatform.android)
               BlocBuilder<SettingsBloc, SettingsState>(
                 bloc: settingsBloc,
                 builder: (BuildContext context, SettingsState settings) =>

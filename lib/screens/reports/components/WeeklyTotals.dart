@@ -132,6 +132,7 @@ class _WeeklyTotalsState extends State<WeeklyTotals> {
                   gridData: const FlGridData(
                     show: true,
                     horizontalInterval: 5.0,
+                    verticalInterval: 1,
                   ),
                   lineTouchData: LineTouchData(
                       enabled: true,
@@ -151,11 +152,15 @@ class _WeeklyTotalsState extends State<WeeklyTotals> {
                           })),
                   titlesData: FlTitlesData(
                       show: true,
+                      // fl_chart shows numbers on all four sides by default
+                      topTitles: const AxisTitles(),
+                      rightTitles: const AxisTitles(),
                       leftTitles: AxisTitles(
                           sideTitles: SideTitles(
                         showTitles: true,
+                        reservedSize: 32,
                         getTitlesWidget: (double v, _) => Text(
-                          v.toStringAsFixed(1),
+                          v.toStringAsFixed(0),
                           style: theme.textTheme.bodySmall,
                         ),
                         interval: 5.0,
@@ -164,6 +169,9 @@ class _WeeklyTotalsState extends State<WeeklyTotals> {
                         sideTitles: SideTitles(
                             reservedSize: 35,
                             showTitles: true,
+                            // one label per week; without it fl_chart picks
+                            // fractions of a week and repeats the dates
+                            interval: 1,
                             getTitlesWidget: (double dweek, _) {
                               int week = dweek.toInt();
                               DateTime date =

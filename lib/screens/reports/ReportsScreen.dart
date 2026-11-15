@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:io';
 
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,6 +56,10 @@ class _ReportsScreenState extends State<ReportsScreen> {
   @override
   Widget build(BuildContext context) {
     final projectsBloc = BlocProvider.of<ProjectsBloc>(context);
+    // the platform Flutter draws for (also in tests), not the host's OS
+    final platform = Theme.of(context).platform;
+    final isDesktop =
+        platform == TargetPlatform.linux || platform == TargetPlatform.macOS;
 
     return Scaffold(
         appBar: AppBar(
@@ -70,7 +73,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
               child: Swiper(
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
-                      padding: Platform.isLinux || Platform.isMacOS
+                      padding: isDesktop
                           ? const EdgeInsets.symmetric(horizontal: 32)
                           : EdgeInsets.zero,
                       child: Builder(builder: (context) {
@@ -110,7 +113,7 @@ class _ReportsScreenState extends State<ReportsScreen> {
                   color: Theme.of(context).disabledColor,
                   activeColor: Theme.of(context).colorScheme.primary,
                 )),
-                control: Platform.isLinux || Platform.isMacOS
+                control: isDesktop
                     ? SwiperControl(
                         iconPrevious: Icons.arrow_back_ios_new,
                         iconNext: Icons.arrow_forward_ios,
