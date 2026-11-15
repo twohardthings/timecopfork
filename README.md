@@ -104,7 +104,7 @@ flutter test --update-goldens --tags golden
 
 The images are generated on Linux with the latest stable Flutter, the same as CI. Text can be drawn slightly differently on other systems or Flutter versions, so there use `flutter test --exclude-tags golden` if the golden tests fail without a visible reason. When a golden test fails in CI, the run has a `golden-failures-…` artifact with the expected, actual and difference images.
 
-The store and README screenshots are rendered the same way, from made-up data relative to today, at 1080 × 2400. They are skipped in normal runs; to update them after a visible change, run the following and review the images:
+The store and README screenshots are rendered the same way, from made-up data relative to today, at 1080 × 2400, together with the store's feature graphic (the banner) for every language in `fastlane/metadata/android/`. They are skipped in normal runs; to update them after a visible change, run the following and review the images:
 
 ```bash
 SCREENSHOTS=1 flutter test test/screenshots

@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   version code 1.
 * New store and README screenshots of the fork (light and dark), generated
   by a test so they can be updated with one command.
+* Store feature graphic ("Time Cop Fork" banner) in all 8 store languages,
+  rendered by the same test.
 
 ### Removed
 * The original app's screenshots (`screenshots/`), Google Play graphics
