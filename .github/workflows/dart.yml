@@ -186,14 +186,18 @@ jobs:
                   f.write(f"{key}={escape(value)}\n")
           PY
 
-      - name: Build release APK
-        run: flutter build apk --release
+      # One APK per processor type instead of one universal APK: the universal
+      # one is about 70 MB, over app stores' size limits (e.g. IzzyOnDroid's).
+      # All three keep the version code from pubspec.yaml (see
+      # android/gradle.properties).
+      - name: Build release APKs
+        run: flutter build apk --release --split-per-abi
 
-      - name: Upload APK
+      - name: Upload APKs
         uses: actions/upload-artifact@v7
         with:
           name: timecopfork-${{ github.sha }}
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-*-release.apk
           if-no-files-found: error
 
       # Release notes are the version's section of CHANGELOG.md, up to the
@@ -201,7 +205,9 @@ jobs:
       - name: Prepare release
         if: env.IS_RELEASE == 'true'
         run: |
-          cp build/app/outputs/flutter-apk/app-release.apk "timecopfork-${VERSION}.apk"
+          for abi in arm64-v8a armeabi-v7a x86_64; do
+            cp "build/app/outputs/flutter-apk/app-${abi}-release.apk" "timecopfork-${VERSION}-${abi}.apk"
+          done
           python3 - <<'PY'
           import os, re, sys
           version = os.environ["VERSION"]
@@ -229,5 +235,8 @@ jobs:
           target_commitish: ${{ github.sha }}
           name: Time Cop Fork ${{ env.VERSION }}
           body_path: release-notes.md
-          files: timecopfork-${{ env.VERSION }}.apk
+          files: |
+            timecopfork-${{ env.VERSION }}-arm64-v8a.apk
+            timecopfork-${{ env.VERSION }}-armeabi-v7a.apk
+            timecopfork-${{ env.VERSION }}-x86_64.apk
           fail_on_unmatched_files: true

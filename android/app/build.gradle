@@ -19,6 +19,15 @@ android {
         disable 'InvalidPackage'
     }
 
+    // Leave out the "dependency metadata" block that AGP adds to APKs and
+    // bundles. It is encrypted with a key only Google Play can read, so
+    // nobody else can check it, and IzzyOnDroid and F-Droid reject APKs that
+    // contain it.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
