@@ -29,7 +29,9 @@ class LocaleOptions extends StatelessWidget {
         builder: (BuildContext context, LocaleState state) {
           return ListTile(
             title: Text(L10N.of(context).tr.language),
-            subtitle: Text(L10N.of(context).tr.automaticLanguage),
+            subtitle: Text(state.locale == null
+                ? L10N.of(context).tr.automaticLanguage
+                : L10N.of(context).tr.langName(state.locale!)),
             trailing: FaIcon(L10N.of(context).rtl
                 ? FontAwesomeIcons.chevronLeft
                 : FontAwesomeIcons.chevronRight),
