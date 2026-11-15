@@ -129,8 +129,20 @@ void main() {
     }
   });
 
+  /// The subtitle of the Language row.
+  Finder languageSubtitle(String text) => find.descendant(
+    of: find.byWidgetPredicate(
+      (w) =>
+          w is ListTile &&
+          w.subtitle is Text &&
+          (w.subtitle as Text).data == text,
+    ),
+    matching: find.text(text),
+  );
+
   testWidgets('changes the language', (tester) async {
     final app = await openSettings(tester);
+    expect(languageSubtitle('Automatic'), findsOneWidget);
     await tester.tap(find.text('Language'));
     await app.settle();
     expect(tester.takeException(), isNull);
@@ -144,6 +156,25 @@ void main() {
     );
     expect(find.text('Einstellungen'), findsOneWidget);
     expect(find.text('Sprache'), findsOneWidget);
+    // the row names the chosen language
+    expect(languageSubtitle('Deutsch'), findsOneWidget);
+
+    // back to automatic
+    await tester.tap(find.text('Sprache'));
+    await app.settle();
+    await tester.tap(find.text('Automatisch').last);
+    await app.settle();
+    expect(app.locale.state.locale, isNull);
+    expect(find.text('Settings'), findsOneWidget);
+    expect(languageSubtitle('Automatic'), findsOneWidget);
+  });
+
+  testWidgets('the Language row names a stored language', (tester) async {
+    await openSettings(
+      tester,
+      settings: InMemorySettingsProvider(locale: const Locale('zh', 'TW')),
+    );
+    expect(languageSubtitle('中文（繁體）'), findsOneWidget);
   });
 
   testWidgets('closing the language list keeps the language', (tester) async {
@@ -155,7 +186,8 @@ void main() {
     await app.settle();
     await tester.tapAt(const Offset(200, 20));
     await app.settle();
-    expect(find.text('Deutsch'), findsNothing);
+    expect(find.byType(RadioListTile<Locale?>), findsNothing);
+    expect(languageSubtitle('Deutsch'), findsOneWidget);
     expect(app.locale.state.locale, const Locale('de'));
     expect(find.text('Einstellungen'), findsOneWidget);
   });

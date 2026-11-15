@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   summary.
 
 ### Fixed
+* Settings: the Language row shows the chosen language instead of always
+  "Automatic" (#27).
 * Reports and Export: "Select All" in the project list now updates the
   charts and check boxes right away.
 * Settings: closing the language list without choosing a language no longer
