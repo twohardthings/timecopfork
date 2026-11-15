@@ -22,6 +22,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * New store and README screenshots of the fork (light and dark), generated
   by a test so they can be updated with one command.
 
+### Removed
+* The original app's screenshots (`screenshots/`), Google Play graphics
+  (`store assets/`) and its screenshot tooling (`integration_test/`,
+  `test_driver/`, `screenshots.*.yaml`, and the `flutter_driver` and
+  `integration_test` dev dependencies). The store listing and screenshots
+  now live in `fastlane/metadata/`.
+
 ### Fixed
 * Reports: the Weekly Hours chart had stray number axes on the top and
   right, repeated dates and wrapped labels when there were only a few weeks.
