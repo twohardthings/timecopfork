@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-15
+Downloads now come as one APK per processor type. Most phones need
+`timecopfork-1.0.1-arm64-v8a.apk`; older 32-bit devices need
+`armeabi-v7a`. Updating from 1.0.0 keeps your data.
+
 ### Added
 * Unit, screen and golden tests for the whole app, run by CI with a coverage
   summary.
@@ -217,7 +222,8 @@ Thanks to all the Hacktoberfest participants, translators, and other volunteers 
 * Ability to export database file
 * Ability to export csv of filtered data
 
-[Unreleased]: https://github.com/twohardthings/timecopfork/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/twohardthings/timecopfork/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/twohardthings/timecopfork/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/twohardthings/timecopfork/releases/tag/v1.0.0
 [1.8.0]: https://github.com/hamaluik/timecop/compare/v1.7.2...v1.8.0
 [1.7.2]: https://github.com/hamaluik/timecop/compare/v1.7.1...v1.7.2

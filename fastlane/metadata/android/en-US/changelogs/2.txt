@@ -1,0 +1,6 @@
+- Downloads: one APK per processor type; most phones need arm64-v8a
+- Settings: the Language row shows the chosen language
+- Settings: closing the language list no longer resets the language
+- Reports and Export: "Select All" updates right away
+- Reports: Weekly Hours chart has readable date labels
+- New store screenshots and descriptions
