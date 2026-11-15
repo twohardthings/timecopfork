@@ -77,6 +77,28 @@ samples, guidance on mobile development, and a full API reference.
 
 After [installing and setting up Flutter](https://docs.flutter.dev/get-started/install) (ideally its latest stable version) and downloading the Time Cop code, you should be able to simply [build and run](https://docs.flutter.dev/get-started/test-drive#run-the-app) this Flutter project, at least for mobile platforms. For more information, see the `CONTRIBUTING.md` file.
 
+### Testing
+
+```bash
+flutter test
+```
+
+runs everything in [`test/`](test/), and CI runs it for every pull request and on `master`:
+
+- **Unit tests** ([`test/unit/`](test/unit/)): the blocs, the models, the CSV export and the database, which runs against a real in-memory SQLite database.
+- **Screen tests** ([`test/screens/`](test/screens/)): start the whole app with in-memory data and use each screen the way a user would (start and stop timers, edit, filter, export, change settings).
+- **Golden tests** ([`test/goldens/`](test/goldens/)): render each screen and compare it with a reference image in `test/goldens/images/` (light, dark and Spanish). They fail when a screen looks different from its image.
+
+After an intended change of the look, update the images and review them like code:
+
+```bash
+flutter test --update-goldens --tags golden
+```
+
+The images are generated on Linux with the latest stable Flutter, the same as CI. Text can be drawn slightly differently on other systems or Flutter versions, so there use `flutter test --exclude-tags golden` if the golden tests fail without a visible reason. When a golden test fails in CI, the run has a `golden-failures-…` artifact with the expected, actual and difference images.
+
+New tests should start the app with `pumpApp` from [`test/helpers/pump_app.dart`](test/helpers/pump_app.dart). The run's summary page in GitHub Actions shows the line coverage.
+
 ### Releasing
 
 1. Raise `version:` in `pubspec.yaml` (e.g. `1.1.0+2`; the number after `+` is the Android version code and must increase with every release).

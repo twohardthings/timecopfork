@@ -46,11 +46,33 @@ jobs:
       - name: Analyze project source
         run: flutter analyze
 
-      # Runs only once the project has tests in test/; `flutter test` fails
-      # when that directory does not exist.
+      # Unit, screen and golden tests (see "Testing" in the README).
       - name: Run tests
-        if: hashFiles('test/**') != ''
-        run: flutter test
+        run: flutter test --coverage
+
+      # Line coverage of lib/, shown on the run's summary page.
+      - name: Coverage summary
+        run: |
+          awk -F'[:,]' '
+            /^SF:/ { file = substr($0, 4) }
+            /^LF:/ { found[file] = $2; total_found += $2 }
+            /^LH:/ { hit[file] = $2; total_hit += $2 }
+            END {
+              printf "## Test coverage: %.1f%% of lines (%d of %d)\n\n", 100 * total_hit / total_found, total_hit, total_found
+              print "| File | Lines | Covered |"
+              print "| --- | ---: | ---: |"
+              for (f in found) printf "| `%s` | %d | %.0f%% |\n", f, found[f], 100 * hit[f] / found[f] | "sort"
+            }' coverage/lcov.info >> "$GITHUB_STEP_SUMMARY"
+
+      # When a golden test fails, Flutter writes the expected, actual and
+      # difference images to test/goldens/failures.
+      - name: Upload golden test failures
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: golden-failures-${{ github.sha }}
+          path: test/goldens/failures
+          if-no-files-found: ignore
 
   # Builds a release APK for every push to master (or a manual run) and
   # attaches it to the workflow run as a downloadable artifact. For a version
