@@ -12,7 +12,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import 'dart:io';
 
 import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:material_ui/material_ui.dart';
@@ -100,7 +99,6 @@ class ThemeUtil {
           primarySwatch: primarySwatch,
           scaffoldBackgroundColor: colors.surface,
           appBarTheme: AppBarTheme(
-              centerTitle: !Platform.isAndroid,
               elevation: appBarElevation,
               scrolledUnderElevation: appBarScrolledUnderElevation,
               shadowColor: Colors.black,

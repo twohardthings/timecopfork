@@ -18,6 +18,9 @@ import 'package:timecop/main.dart' as app;
 
 import 'fakes.dart';
 
+/// The [RepaintBoundary] around the whole app, for capturing screenshots.
+const appBoundaryKey = ValueKey('appBoundary');
+
 /// A phone-sized test window, in logical pixels.
 const Size phoneSize = Size(412, 915);
 
@@ -110,7 +113,11 @@ Future<TestApp> pumpApp(
         BlocProvider<ProjectsBloc>(create: (_) => ProjectsBloc(d)),
         BlocProvider<NotificationsBloc>(create: (_) => NotificationsBloc(n)),
       ],
-      child: app.TimeCopApp(settings: s),
+      // lets screenshots capture the whole app (see test/screenshots)
+      child: RepaintBoundary(
+        key: appBoundaryKey,
+        child: app.TimeCopApp(settings: s),
+      ),
     ),
   );
   final testApp = TestApp(tester, d, s, n);

@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:timecop/screens/reports/ReportsScreen.dart';
+import 'package:timecop/screens/reports/components/WeeklyTotals.dart';
 
 import '../helpers/fakes.dart';
 import '../helpers/pump_app.dart';
@@ -50,6 +51,22 @@ void main() {
     expect(tester.takeException(), isNull);
     expect(find.byKey(const Key('weeklyTotals')), findsOneWidget);
     expect(find.text('Weekly Hours'), findsOneWidget);
+    // one date label per week, numbers only on the left and bottom
+    final titles = tester
+        .widget<LineChart>(find.byType(LineChart))
+        .data
+        .titlesData;
+    expect(titles.bottomTitles.sideTitles.interval, 1);
+    expect(
+      tester
+          .widget<LineChart>(find.byType(LineChart))
+          .data
+          .gridData
+          .verticalInterval,
+      1,
+    );
+    expect(titles.topTitles.sideTitles.showTitles, isFalse);
+    expect(titles.rightTitles.sideTitles.showTitles, isFalse);
 
     await nextPage(app);
     expect(tester.takeException(), isNull);
@@ -70,6 +87,37 @@ void main() {
     expect(inTable('0.3'), findsOneWidget);
     expect(inTable('Total'), findsOneWidget);
     expect(inTable('10.0'), findsOneWidget);
+  });
+
+  test('the weekly chart labels every week, or fewer for long ranges', () {
+    expect(weekLabelInterval(0), 1);
+    expect(weekLabelInterval(2), 1);
+    expect(weekLabelInterval(6), 1);
+    expect(weekLabelInterval(7), 2);
+    expect(weekLabelInterval(12), 2);
+    expect(weekLabelInterval(52), 9);
+  });
+
+  testWidgets('a year of data gets about six date labels', (tester) async {
+    final data = InMemoryDataProvider();
+    final project = await data.createProject(name: 'Work');
+    final start = DateTime(2025, 1, 6, 9);
+    for (var week = 0; week < 52; week++) {
+      final day = start.add(Duration(days: week * 7));
+      await data.createTimer(
+        description: 'w$week',
+        projectID: project.id,
+        startTime: day,
+        endTime: day.add(const Duration(hours: 3)),
+      );
+    }
+    final app = await pumpApp(tester, data: data);
+    await app.push(const ReportsScreen());
+    await nextPage(app);
+    expect(tester.takeException(), isNull);
+    final chart = tester.widget<LineChart>(find.byType(LineChart)).data;
+    expect(chart.titlesData.bottomTitles.sideTitles.interval, 9);
+    expect(chart.gridData.verticalInterval, 9);
   });
 
   testWidgets('unselected projects are left out', (tester) async {
