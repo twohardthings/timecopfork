@@ -45,6 +45,13 @@ class WeeklyTotals extends StatefulWidget {
   State<WeeklyTotals> createState() => _WeeklyTotalsState();
 }
 
+/// The step, in weeks, between date labels and grid lines of the weekly
+/// chart: every week for short ranges, and wider for long ones so that at
+/// most about six dates fit on a phone-wide axis.
+@visibleForTesting
+double weekLabelInterval(int lastWeek) =>
+    max(1, (lastWeek / 6).ceil()).toDouble();
+
 class _WeeklyTotalsState extends State<WeeklyTotals> {
   static LinkedHashMap<int?, LinkedHashMap<int, double>> calculateData(
       BuildContext context,
@@ -108,6 +115,10 @@ class _WeeklyTotalsState extends State<WeeklyTotals> {
         (double omax, LinkedHashMap<int, double> weeks) => max(omax,
             weeks.values.fold(0, (double omax, double v) => max(omax, v))));
     maxY = ((maxY ~/ 5) + 1) * 5.0 + 5.0;
+    final int lastWeek = projectWeeklyHours.values
+        .expand((weeks) => weeks.keys)
+        .fold(0, (int omax, int week) => max(omax, week));
+    final double weekInterval = weekLabelInterval(lastWeek);
 
     return Padding(
         padding: const EdgeInsets.fromLTRB(16, 16, 16, 40),
@@ -129,10 +140,10 @@ class _WeeklyTotalsState extends State<WeeklyTotals> {
                           color: theme.textTheme.bodyMedium!.color!,
                         ),
                       )),
-                  gridData: const FlGridData(
+                  gridData: FlGridData(
                     show: true,
                     horizontalInterval: 5.0,
-                    verticalInterval: 1,
+                    verticalInterval: weekInterval,
                   ),
                   lineTouchData: LineTouchData(
                       enabled: true,
@@ -169,9 +180,9 @@ class _WeeklyTotalsState extends State<WeeklyTotals> {
                         sideTitles: SideTitles(
                             reservedSize: 35,
                             showTitles: true,
-                            // one label per week; without it fl_chart picks
+                            // whole weeks; without it fl_chart picks
                             // fractions of a week and repeats the dates
-                            interval: 1,
+                            interval: weekInterval,
                             getTitlesWidget: (double dweek, _) {
                               int week = dweek.toInt();
                               DateTime date =
