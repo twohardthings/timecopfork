@@ -12,8 +12,9 @@ void main() {
     final List<LicenseEntry> licenses = await getFontLicenses().toList();
     expect(licenses, hasLength(2));
     for (final license in licenses) {
-      final text =
-          license.paragraphs.map((LicenseParagraph p) => p.text).join('\n');
+      final text = license.paragraphs
+          .map((LicenseParagraph p) => p.text)
+          .join('\n');
       expect(text, isNotEmpty, reason: license.packages.join(', '));
     }
   });

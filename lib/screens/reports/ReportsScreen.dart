@@ -138,11 +138,13 @@ class _ReportsScreenState extends State<ReportsScreen> {
               onNoneSelected: () => setState(() {
                 selectedProjects.clear();
               }),
-              onAllSelected: () => selectedProjects = <Project?>[null]
-                  .followedBy(projectsBloc.state.projects
-                      .where((p) => !p.archived)
-                      .map((p) => Project.clone(p)))
-                  .toList(),
+              onAllSelected: () => setState(() {
+                selectedProjects = <Project?>[null]
+                    .followedBy(projectsBloc.state.projects
+                        .where((p) => !p.archived)
+                        .map((p) => Project.clone(p)))
+                    .toList();
+              }),
             ),
           ],
         ));

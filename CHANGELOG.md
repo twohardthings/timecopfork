@@ -6,6 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+* Unit, screen and golden tests for the whole app, run by CI with a coverage
+  summary.
+
+### Fixed
+* Reports and Export: "Select All" in the project list now updates the
+  charts and check boxes right away.
+* Settings: closing the language list without choosing a language no longer
+  resets the language to "Automatic".
+
 ## [1.0.0] - 2026-11-14
 First release of **Time Cop Fork**, a fork of Time Cop 1.8.1. Version numbers
 restart at 1.0.0 (version code 1).

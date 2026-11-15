@@ -1,0 +1,4 @@
+# Golden tests compare screens with the reference images in
+# test/goldens/images. Skip them with `flutter test --exclude-tags golden`.
+tags:
+  golden:

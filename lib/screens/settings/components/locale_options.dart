@@ -35,7 +35,9 @@ class LocaleOptions extends StatelessWidget {
                 : FontAwesomeIcons.chevronRight),
             leading: const FaIcon(FontAwesomeIcons.language),
             onTap: () async {
-              Locale? newLocale = await showModalBottomSheet<Locale>(
+              // the choice is applied in onChanged; closing the sheet
+              // without choosing keeps the current language
+              await showModalBottomSheet<Locale>(
                   context: context,
                   builder: (context) => RadioGroup<Locale?>(
                       groupValue: state.locale,
@@ -78,8 +80,6 @@ class LocaleOptions extends StatelessWidget {
                             ))
                             .toList(),
                       )));
-
-              bloc.add(ChangeLocaleEvent(newLocale));
             },
           );
         });
