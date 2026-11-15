@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `test_driver/`, `screenshots.*.yaml`, and the `flutter_driver` and
   `integration_test` dev dependencies). The store listing and screenshots
   now live in `fastlane/metadata/`.
+* `TODO.md`, a finished checklist from the original app. The README's
+  "Todo" section now points to the GitHub issues.
 
 ### Fixed
 * Reports: the Weekly Hours chart had stray number axes on the top and

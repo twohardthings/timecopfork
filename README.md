@@ -124,6 +124,8 @@ Translations are handled using [Project Fluent](https://projectfluent.org/) and 
 
 All translations except English, Italian, Czech, Norwegian, and Indonesian were originally auto-translated by [Google Translate](https://cloud.google.com/translate) using the original author's [Translate Tool](https://github.com/hamaluik/translatetool).
 
-## Todo
+## Roadmap
 
-A list of “user stories” (and I use that term very loosely) guiding the development of this app is available in [design/user-stories.md](design/user-stories.md); any unchecked boxes are outstanding items on the todo list!
+Planned work and known bugs are tracked in the [issues](https://github.com/twohardthings/timecopfork/issues). Ideas and bug reports are welcome there.
+
+The original author's design notes are in [design/](design/): the [user stories](design/user-stories.md) that guided the app (all of them are done) and early [mockups](design/mockups.md).
