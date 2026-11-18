@@ -52,6 +52,17 @@ Download the APK from the [latest release](https://github.com/twohardthings/time
 
 If Android says the app isn't compatible, try the next one. Android asks you to allow installing apps from your browser or file manager the first time. To update, install the newer release's APK over the old one; your data is kept.
 
+### Verify the download
+
+All APKs are signed with this certificate (`CN=Two Hard Things`):
+
+```
+io.github.twohardthings.timecopfork
+A8:D7:BB:60:8B:23:F0:7F:C0:6E:45:CB:1F:F6:BD:07:25:FC:C9:91:B1:E4:80:0B:ED:84:54:AB:85:A7:69:33
+```
+
+Paste both lines into [AppVerifier](https://github.com/soupslurpr/AppVerifier) and share the APK to it, or compare the SHA-256 with `apksigner verify --print-certs <apk>`. Obtainium also refuses updates signed with a different certificate. Each release's notes repeat the fingerprint, read from the APKs by CI, and a release fails if it doesn't match this one.
+
 Development builds: every change on `master` also produces the APKs, attached to the [Dart workflow](https://github.com/twohardthings/timecopfork/actions/workflows/dart.yml?query=branch%3Amaster) run under **Artifacts** (you need to be signed in to GitHub).
 
 ## Motivation
