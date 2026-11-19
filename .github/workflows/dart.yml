@@ -96,6 +96,17 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # The Flutter engine's Android artifacts change with the Flutter
+      # version, which no repository file records. The cache key can only
+      # hash files in the workspace, so write the resolved revisions into
+      # .dart_tool (gitignored) for the key below.
+      - name: Record the Flutter version for the Gradle cache key
+        run: |
+          flutter --version --machine \
+            | jq -r '"framework \(.frameworkRevision)\nengine \(.engineRevision)"' \
+            > .dart_tool/flutter-revisions.txt
+          cat .dart_tool/flutter-revisions.txt
+
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
@@ -106,7 +117,8 @@ jobs:
           # (HTTP 429).
           cache: gradle
           # The cache key. These are setup-java's default patterns, plus
-          # gradle.properties and pubspec.lock: Flutter plugins' Android build
+          # gradle.properties, the Flutter revisions recorded above, and
+          # pubspec.lock: Flutter plugins' Android build
           # files live in the pub cache, so a plugin update changes only
           # pubspec.lock, and without it the old cache would be restored and
           # never saved again. This step comes after "flutter pub get", so the
@@ -120,6 +132,7 @@ jobs:
             gradle/*.versions.toml
             **/versions.properties
             pubspec.lock
+            .dart_tool/flutter-revisions.txt
 
       # Decides whether this run publishes a release, and for which version:
       # - a pushed tag v1.2.3 must match pubspec.yaml version 1.2.3+N
