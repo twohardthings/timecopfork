@@ -93,10 +93,24 @@ jobs:
           distribution: temurin
           java-version: '21'
           # Reuse Gradle's downloaded dependencies and wrapper between runs
-          # (~/.gradle/caches and ~/.gradle/wrapper, keyed on the Gradle
-          # build files), so a build doesn't fetch everything from Maven
-          # Central again and run into its rate limit (HTTP 429).
+          # (~/.gradle/caches and ~/.gradle/wrapper), so a build doesn't fetch
+          # everything from Maven Central again and run into its rate limit
+          # (HTTP 429).
           cache: gradle
+          # The cache key. These are setup-java's default patterns, plus
+          # gradle.properties and pubspec.lock: Flutter plugins' Android build
+          # files live in the pub cache, so a plugin update changes only
+          # pubspec.lock, and without it the old cache would be restored and
+          # never saved again.
+          cache-dependency-path: |
+            **/*.gradle*
+            **/gradle-wrapper.properties
+            **/gradle.properties
+            buildSrc/**/Versions.kt
+            buildSrc/**/Dependencies.kt
+            gradle/*.versions.toml
+            **/versions.properties
+            pubspec.lock
 
       - uses: subosito/flutter-action@v2
         with:
