@@ -88,11 +88,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - uses: actions/setup-java@v6
-        with:
-          distribution: temurin
-          java-version: '21'
-
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
@@ -100,6 +95,44 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+
+      # The Flutter engine's Android artifacts change with the Flutter
+      # version, which no repository file records. The cache key can only
+      # hash files in the workspace, so write the resolved revisions into
+      # .dart_tool (gitignored) for the key below.
+      - name: Record the Flutter version for the Gradle cache key
+        run: |
+          flutter --version --machine \
+            | jq -r '"framework \(.frameworkRevision)\nengine \(.engineRevision)"' \
+            > .dart_tool/flutter-revisions.txt
+          cat .dart_tool/flutter-revisions.txt
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          # Reuse Gradle's downloaded dependencies and wrapper between runs
+          # (~/.gradle/caches and ~/.gradle/wrapper), so a build doesn't fetch
+          # everything from Maven Central again and run into its rate limit
+          # (HTTP 429).
+          cache: gradle
+          # The cache key. These are setup-java's default patterns, plus
+          # gradle.properties, the Flutter revisions recorded above, and
+          # pubspec.lock: Flutter plugins' Android build
+          # files live in the pub cache, so a plugin update changes only
+          # pubspec.lock, and without it the old cache would be restored and
+          # never saved again. This step comes after "flutter pub get", so the
+          # key hashes the lockfile the build actually uses.
+          cache-dependency-path: |
+            **/*.gradle*
+            **/gradle-wrapper.properties
+            **/gradle.properties
+            buildSrc/**/Versions.kt
+            buildSrc/**/Dependencies.kt
+            gradle/*.versions.toml
+            **/versions.properties
+            pubspec.lock
+            .dart_tool/flutter-revisions.txt
 
       # Decides whether this run publishes a release, and for which version:
       # - a pushed tag v1.2.3 must match pubspec.yaml version 1.2.3+N
