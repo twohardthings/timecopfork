@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   the GitHub releases.
 * README badges for the build status, latest release, minimum Android
   version, license and downloads.
+* Releases are scanned with VirusTotal: CI uploads the APKs and adds each
+  result, with a link to its report, to the release notes. README badge and
+  note in "Verify the download".
 * README and every release's notes show the signing certificate's SHA-256
   fingerprint, for checking downloads (e.g. with AppVerifier). CI reads it
   from the built APKs and stops a release signed with a different key.

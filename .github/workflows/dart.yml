@@ -294,6 +294,27 @@ jobs:
           } >> release-notes.md
           cat release-notes.md
 
+      # Uploads the release APKs to VirusTotal and adds each result, with a
+      # link to its report, to the release notes. Needs the repository secret
+      # VIRUSTOTAL_API_KEY. Without it, or if VirusTotal fails, the release is
+      # still published, with a warning on the run.
+      - name: VirusTotal scan
+        if: env.IS_RELEASE == 'true'
+        env:
+          VT_API_KEY: ${{ secrets.VIRUSTOTAL_API_KEY }}
+        run: |
+          if [ -z "$VT_API_KEY" ]; then
+            echo "::warning::VIRUSTOTAL_API_KEY is not set; publishing without a VirusTotal scan."
+            exit 0
+          fi
+          if ! python3 .github/scripts/virustotal.py timecopfork-"$VERSION"-*.apk > virustotal.md; then
+            echo "::warning::The VirusTotal scan failed; publishing without its results."
+            exit 0
+          fi
+          { echo; cat virustotal.md; } >> release-notes.md
+          cat virustotal.md >> "$GITHUB_STEP_SUMMARY"
+          cat virustotal.md
+
       # For a manual release this also creates the tag, on the commit that was
       # built. (Tags created with the workflow's token don't start another run.)
       - name: Publish GitHub Release
