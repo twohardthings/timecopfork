@@ -12,7 +12,7 @@
   <a href="https://github.com/twohardthings/timecopfork/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/twohardthings/timecopfork?style=flat-square"></a>
   <img alt="Android 7.0+" src="https://img.shields.io/badge/Android-7.0%2B-3DDC84?logo=android&logoColor=white&style=flat-square">
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/twohardthings/timecopfork?style=flat-square"></a>
-  <a href="https://github.com/twohardthings/timecopfork/releases/latest"><img alt="VirusTotal: scanned" src="https://img.shields.io/badge/VirusTotal-scanned-394EFF?logo=virustotal&logoColor=white&style=flat-square"></a>
+  <a href="https://github.com/twohardthings/timecopfork/releases/latest"><img alt="VirusTotal: reports" src="https://img.shields.io/badge/VirusTotal-reports-394EFF?logo=virustotal&logoColor=white&style=flat-square"></a>
   <a href="https://github.com/twohardthings/timecopfork/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/twohardthings/timecopfork/total?style=flat-square"></a>
 </div>
 
@@ -66,7 +66,7 @@ io.github.twohardthings.timecopfork
 A8:D7:BB:60:8B:23:F0:7F:C0:6E:45:CB:1F:F6:BD:07:25:FC:C9:91:B1:E4:80:0B:ED:84:54:AB:85:A7:69:33
 ```
 
-Paste both lines into [AppVerifier](https://github.com/soupslurpr/AppVerifier) and share the APK to it, or compare the SHA-256 with `apksigner verify --print-certs <apk>`. Obtainium also refuses updates signed with a different certificate. Each release's notes also link the [VirusTotal](https://www.virustotal.com) scan of every APK, made by CI when the release is published. Each release's notes repeat the fingerprint, read from the APKs by CI, and a release fails if it doesn't match this one.
+Paste both lines into [AppVerifier](https://github.com/soupslurpr/AppVerifier) and share the APK to it, or compare the SHA-256 with `apksigner verify --print-certs <apk>`. Obtainium also refuses updates signed with a different certificate. When CI's [VirusTotal](https://www.virustotal.com) scan of the release succeeds, the release notes also show each APK's result and link its report. Each release's notes repeat the fingerprint, read from the APKs by CI, and a release fails if it doesn't match this one.
 
 Development builds: every change on `master` also produces the APKs, attached to the [Dart workflow](https://github.com/twohardthings/timecopfork/actions/workflows/dart.yml?query=branch%3Amaster) run under **Artifacts** (you need to be signed in to GitHub).
 

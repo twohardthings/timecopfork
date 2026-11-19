@@ -307,7 +307,10 @@ jobs:
             echo "::warning::VIRUSTOTAL_API_KEY is not set; publishing without a VirusTotal scan."
             exit 0
           fi
-          if ! python3 .github/scripts/virustotal.py timecopfork-"$VERSION"-*.apk > virustotal.md; then
+          # 20 minutes at most in total, so a stalled VirusTotal can't hold
+          # up the release.
+          if ! timeout 20m python3 .github/scripts/virustotal.py \
+              timecopfork-"$VERSION"-*.apk > virustotal.md; then
             echo "::warning::The VirusTotal scan failed; publishing without its results."
             exit 0
           fi

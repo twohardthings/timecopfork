@@ -12,6 +12,7 @@ after VT_TIMEOUT seconds (default 900); the link shows the result later.
 """
 
 import hashlib
+import http.client
 import json
 import os
 import sys
@@ -23,21 +24,40 @@ import uuid
 API = os.environ.get("VT_API_URL", "https://www.virustotal.com/api/v3")
 GUI = "https://www.virustotal.com/gui/file/"
 KEY = os.environ["VT_API_KEY"]
-SPACING = float(os.environ.get("VT_SPACING", "16"))
-RETRY_WAIT = float(os.environ.get("VT_RETRY_WAIT", "60"))  # seconds between requests
-TIMEOUT = float(os.environ.get("VT_TIMEOUT", "900"))
+SPACING = float(os.environ.get("VT_SPACING", "16"))  # seconds between requests
+RETRY_WAIT = float(os.environ.get("VT_RETRY_WAIT", "60"))  # after a 429 or error
+TIMEOUT = float(os.environ.get("VT_TIMEOUT", "900"))  # for waiting on the scans
 DIRECT_UPLOAD_LIMIT = 32 * 1024 * 1024  # bigger files need an upload URL
 
 _last_request = 0.0
 
 
-def request(method, url, data=None, headers=None):
-    """Sends one API request, keeping to the rate limit and retrying 429s."""
+class DeadlineExceeded(Exception):
+    """The time for waiting on the scans ran out."""
+
+
+def _sleep(seconds, deadline):
+    if deadline is not None and time.monotonic() + seconds >= deadline:
+        raise DeadlineExceeded()
+    if seconds > 0:
+        time.sleep(seconds)
+
+
+def request(method, url, data=None, headers=None, deadline=None):
+    """Sends one API request, keeping to the rate limit and retrying rate
+    limits (429) and transient network errors a few times.
+
+    With a deadline (a time.monotonic() value), no wait or request runs past
+    it; DeadlineExceeded is raised instead.
+    """
     global _last_request
     for attempt in range(6):
-        wait = _last_request + SPACING - time.monotonic()
-        if wait > 0:
-            time.sleep(wait)
+        _sleep(_last_request + SPACING - time.monotonic(), deadline)
+        timeout = 300.0
+        if deadline is not None:
+            timeout = min(timeout, deadline - time.monotonic())
+            if timeout <= 0:
+                raise DeadlineExceeded()
         _last_request = time.monotonic()
         req = urllib.request.Request(url, data=data, method=method)
         req.add_header("x-apikey", KEY)
@@ -45,20 +65,26 @@ def request(method, url, data=None, headers=None):
         for name, value in (headers or {}).items():
             req.add_header(name, value)
         try:
-            with urllib.request.urlopen(req, timeout=300) as response:
+            with urllib.request.urlopen(req, timeout=timeout) as response:
                 return json.load(response)
         except urllib.error.HTTPError as e:
             if e.code == 429 and attempt < 5:
-                time.sleep(RETRY_WAIT)  # quota for this minute used up
+                _sleep(RETRY_WAIT, deadline)  # quota for this minute used up
                 continue
             body = e.read().decode("utf-8", "replace")[:500]
             raise SystemExit(f"VirusTotal {method} {url}: HTTP {e.code}: {body}")
-        except urllib.error.URLError as e:
+        except (
+            urllib.error.URLError,  # e.g. connection refused, DNS
+            http.client.HTTPException,  # e.g. IncompleteRead, RemoteDisconnected
+            ConnectionError,  # e.g. connection reset while reading
+            TimeoutError,  # read timeout
+        ) as e:
+            reason = getattr(e, "reason", None) or repr(e)
             if attempt < 5:
-                print(f"{method} {url} failed ({e.reason}), retrying", file=sys.stderr)
-                time.sleep(RETRY_WAIT / 2)
+                print(f"{method} {url} failed ({reason}), retrying", file=sys.stderr)
+                _sleep(RETRY_WAIT / 2, deadline)
                 continue
-            raise SystemExit(f"VirusTotal {method} {url}: {e.reason}")
+            raise SystemExit(f"VirusTotal {method} {url}: {reason}")
 
 
 def upload(path):
@@ -96,15 +122,19 @@ def main(paths):
 
     deadline = time.monotonic() + TIMEOUT
     pending = list(files)
-    while pending and time.monotonic() < deadline:
-        for file in list(pending):
-            attributes = request("GET", API + "/analyses/" + file["analysis"])[
-                "data"
-            ]["attributes"]
-            if attributes.get("status") == "completed":
-                file["stats"] = attributes["stats"]
-                pending.remove(file)
-                print(f"Scanned {file['path']}: {file['stats']}", file=sys.stderr)
+    try:
+        while pending:
+            for file in list(pending):
+                result = request(
+                    "GET", API + "/analyses/" + file["analysis"], deadline=deadline
+                )
+                attributes = result["data"]["attributes"]
+                if attributes.get("status") == "completed":
+                    file["stats"] = attributes["stats"]
+                    pending.remove(file)
+                    print(f"Scanned {file['path']}: {file['stats']}", file=sys.stderr)
+    except DeadlineExceeded:
+        print(f"Stopped waiting; {len(pending)} scan(s) not finished", file=sys.stderr)
 
     print("### VirusTotal")
     print()
