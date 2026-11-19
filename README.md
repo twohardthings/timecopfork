@@ -8,7 +8,11 @@
 </div>
 <br />
 <div align="center">
-  <img alt="License" src="https://img.shields.io/github/license/twohardthings/timecopfork?style=flat-square">
+  <a href="https://github.com/twohardthings/timecopfork/actions/workflows/dart.yml?query=branch%3Amaster"><img alt="Build" src="https://img.shields.io/github/actions/workflow/status/twohardthings/timecopfork/dart.yml?branch=master&label=build&style=flat-square"></a>
+  <a href="https://github.com/twohardthings/timecopfork/releases/latest"><img alt="Latest release" src="https://img.shields.io/github/v/release/twohardthings/timecopfork?style=flat-square"></a>
+  <img alt="Android 7.0+" src="https://img.shields.io/badge/Android-7.0%2B-3DDC84?logo=android&logoColor=white&style=flat-square">
+  <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/twohardthings/timecopfork?style=flat-square"></a>
+  <a href="https://github.com/twohardthings/timecopfork/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/twohardthings/timecopfork/total?style=flat-square"></a>
 </div>
 
 ## About this fork
