@@ -43,6 +43,25 @@ def _sleep(seconds, deadline):
         time.sleep(seconds)
 
 
+def _read_json(response, deadline):
+    """Reads a JSON response. The urlopen timeout only limits each socket
+    read, so with a deadline the body is read in chunks and the deadline is
+    checked between them; a slowly trickled response can't outlast it."""
+    if deadline is None:
+        return json.load(response)
+    chunks = []
+    while True:
+        if time.monotonic() >= deadline:
+            raise DeadlineExceeded()
+        chunk = response.read1(65536)
+        if not chunk:
+            body = b"".join(chunks)
+            if response.length:  # closed before the Content-Length was sent
+                raise http.client.IncompleteRead(body, response.length)
+            return json.loads(body)
+        chunks.append(chunk)
+
+
 def request(method, url, data=None, headers=None, deadline=None):
     """Sends one API request, keeping to the rate limit and retrying rate
     limits (429) and transient network errors a few times.
@@ -66,7 +85,7 @@ def request(method, url, data=None, headers=None, deadline=None):
             req.add_header(name, value)
         try:
             with urllib.request.urlopen(req, timeout=timeout) as response:
-                return json.load(response)
+                return _read_json(response, deadline)
         except urllib.error.HTTPError as e:
             if e.code == 429 and attempt < 5:
                 _sleep(RETRY_WAIT, deadline)  # quota for this minute used up
