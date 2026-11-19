@@ -199,13 +199,25 @@ jobs:
       # README ("Verify the download"), so a wrong key can't slip through.
       - name: Signing certificate
         run: |
+          set -o pipefail
           tools=$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -n 1)
+          echo "apksigner from $tools"
           fingerprints=""
           for apk in build/app/outputs/flutter-apk/app-*-release.apk; do
-            fp=$("${tools}apksigner" verify --print-certs "$apk" \
-              | sed -n 's/^Signer #1 certificate SHA-256 digest: //p')
+            out=$("${tools}apksigner" verify --print-certs "$apk")
+            # The label differs between build-tools versions, e.g.
+            # "Signer #1 certificate SHA-256 digest: …" (36) and
+            # "V2 Signer: certificate SHA-256 digest: …" (37).
+            fp=$(printf '%s\n' "$out" \
+              | sed -n 's/^.*certificate SHA-256 digest: *//p' | sort -u)
             if [ -z "$fp" ]; then
+              printf '%s\n' "$out"
               echo "::error::No signing certificate found in $apk."
+              exit 1
+            fi
+            if [ "$(printf '%s\n' "$fp" | wc -l)" -ne 1 ]; then
+              printf '%s\n' "$out"
+              echo "::error::$apk is signed with more than one certificate."
               exit 1
             fi
             fingerprints="$fingerprints$fp"$'\n'
