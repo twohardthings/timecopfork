@@ -88,6 +88,14 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
       - uses: actions/setup-java@v6
         with:
           distribution: temurin
@@ -101,7 +109,8 @@ jobs:
           # gradle.properties and pubspec.lock: Flutter plugins' Android build
           # files live in the pub cache, so a plugin update changes only
           # pubspec.lock, and without it the old cache would be restored and
-          # never saved again.
+          # never saved again. This step comes after "flutter pub get", so the
+          # key hashes the lockfile the build actually uses.
           cache-dependency-path: |
             **/*.gradle*
             **/gradle-wrapper.properties
@@ -111,14 +120,6 @@ jobs:
             gradle/*.versions.toml
             **/versions.properties
             pubspec.lock
-
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          cache: true
-
-      - name: Install dependencies
-        run: flutter pub get
 
       # Decides whether this run publishes a release, and for which version:
       # - a pushed tag v1.2.3 must match pubspec.yaml version 1.2.3+N
