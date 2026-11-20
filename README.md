@@ -14,6 +14,7 @@
   <a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/twohardthings/timecopfork?style=flat-square"></a>
   <a href="https://github.com/twohardthings/timecopfork/releases/latest"><img alt="VirusTotal: reports" src="https://img.shields.io/badge/VirusTotal-reports-394EFF?logo=virustotal&logoColor=white&style=flat-square"></a>
   <a href="https://github.com/twohardthings/timecopfork/releases"><img alt="Downloads" src="https://img.shields.io/github/downloads/twohardthings/timecopfork/total?style=flat-square"></a>
+  <a href="https://twohardthings.github.io/fdroid/"><img alt="F-Droid: Two Hard Things repo" src="https://img.shields.io/badge/F--Droid-Two%20Hard%20Things%20repo-1976D2?logo=fdroid&logoColor=white&style=flat-square"></a>
 </div>
 
 ## About this fork
@@ -33,7 +34,7 @@ All changes are listed in the [changelog](CHANGELOG.md). Credit for the app itse
 
 ## Download
 
-The fork is Android-only and is not in an app store. There are two ways to install it.
+The fork is Android-only and is not in an app store. There are three ways to install it.
 
 ### With Obtainium (recommended: automatic updates)
 
@@ -46,6 +47,16 @@ The fork is Android-only and is not in an app store. There are two ways to insta
 3. Tap **Install**. If Obtainium asks which APK to use, pick the one for your device (see below; usually `arm64-v8a`).
 
 Obtainium checks for new releases in the background; updates keep your data.
+
+### With F-Droid (automatic updates)
+
+The fork is in the [Two Hard Things F-Droid repo](https://twohardthings.github.io/fdroid/), which republishes the signed APKs from the GitHub releases (not the official F-Droid repository).
+
+1. Install an F-Droid client, such as [F-Droid](https://f-droid.org/), Neo Store or Droid-ify.
+2. On your phone, open https://twohardthings.github.io/fdroid/ and tap **Add to F-Droid**, or scan its QR code with your client.
+3. Search for Time Cop Fork and install it. The client picks the APK for your device.
+
+The link and QR code include the repo's signing key fingerprint, so your client refuses the repo if it isn't signed by that key. New releases appear there within minutes; updates keep your data.
 
 ### Manually
 

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+* README: F-Droid badge and "With F-Droid" install steps for the Two Hard
+  Things F-Droid repo.
 * Releases start the publish workflow of the Two Hard Things F-Droid repo
   (twohardthings/fdroid), so a new version is there within minutes. Needs
   the FDROID_DISPATCH_TOKEN secret; without it, the F-Droid repo picks the
