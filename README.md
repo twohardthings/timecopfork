@@ -56,7 +56,7 @@ The fork is in the [Two Hard Things F-Droid repo](https://twohardthings.github.i
 2. On your phone, open https://twohardthings.github.io/fdroid/ and tap **Add to F-Droid**, or scan its QR code with your client.
 3. Search for Time Cop Fork and install it. The client picks the APK for your device.
 
-The link and QR code include the repo's signing key fingerprint, so your client refuses the repo if it isn't signed by that key. New releases appear there within minutes; updates keep your data.
+The link and QR code include the repo's signing key fingerprint, so your client refuses the repo if it isn't signed by that key. New releases usually appear there within minutes, and at the latest with the repo's daily update; updates keep your data.
 
 ### Manually
 
