@@ -83,3 +83,5 @@ closeMenu = 메뉴 닫기
 search = 검색
 remove = 제거하다
 stopTimer = 타이머 중지
+blockScreenshots = 스크린샷 차단
+blockScreenshotsDescription = 최근 앱 목록에서도 앱 내용을 숨깁니다

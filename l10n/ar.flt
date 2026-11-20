@@ -93,3 +93,5 @@ filterFromUntil = التصفية من { $dateFrom } حتى { $dateUntil }
 exportImport = الاستيراد والتصدير
 exportCSV = تصدير CSV
 storageAccessRequired = يلزم الوصول إلى مساحة التخزين
+blockScreenshots = حظر لقطات الشاشة
+blockScreenshotsDescription = يُخفي أيضًا محتوى التطبيق في قائمة التطبيقات الأخيرة

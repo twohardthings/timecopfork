@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+* Settings: "Block Screenshots" (Android, off by default) blocks screenshots
+  and screen recordings of the app and hides its content in the list of
+  recent apps (#44).
+
 ## [1.0.2] - 2026-11-20
 The app itself is unchanged from 1.0.1. This release adds new ways to
 install it and to check downloads: the Two Hard Things F-Droid repo,

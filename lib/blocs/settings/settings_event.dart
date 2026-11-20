@@ -55,6 +55,7 @@ class SetBoolValueEvent extends SettingsEvent {
   final bool? showRunningTimersAsNotifications;
   final bool? showProjectNames;
   final bool? nagAboutMissingTimer;
+  final bool? blockScreenshots;
 
   const SetBoolValueEvent(
       {this.exportGroupTimers,
@@ -74,7 +75,8 @@ class SetBoolValueEvent extends SettingsEvent {
       this.showBadgeCounts,
       this.showRunningTimersAsNotifications,
       this.showProjectNames,
-      this.nagAboutMissingTimer});
+      this.nagAboutMissingTimer,
+      this.blockScreenshots});
 
   @override
   List<Object?> get props => [
@@ -96,6 +98,7 @@ class SetBoolValueEvent extends SettingsEvent {
         showRunningTimersAsNotifications,
         showProjectNames,
         nagAboutMissingTimer,
+        blockScreenshots,
       ];
 }
 

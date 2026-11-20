@@ -93,3 +93,5 @@ storageAccessRequired = भंडारण पहुँच की आवश्�
 filterFrom = { $dateFrom } से फ़िल्टर करना
 filterUntil = { $dateUntil } तक फ़िल्टर करना
 filterFromUntil = { $dateFrom } से { $dateUntil } तक फ़िल्टर करना
+blockScreenshots = स्क्रीनशॉट रोकें
+blockScreenshotsDescription = हाल के ऐप्स की सूची में ऐप की सामग्री भी छिपाता है

@@ -30,6 +30,7 @@ import 'package:timecop/blocs/settings/settings_bloc.dart';
 import 'package:timecop/blocs/settings/settings_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:timecop/blocs/settings/settings_state.dart';
+import 'package:timecop/utils/secure_screen.dart';
 import 'package:timecop/blocs/theme/theme_bloc.dart';
 import 'package:timecop/blocs/timers/bloc.dart';
 import 'package:timecop/data_providers/data/data_provider.dart';
@@ -109,6 +110,7 @@ class TimeCopApp extends StatefulWidget {
 
 class _TimeCopAppState extends State<TimeCopApp> with WidgetsBindingObserver {
   late Timer _updateTimersTimer;
+  late StreamSubscription<bool> _blockScreenshots;
   Brightness? brightness;
 
   @override
@@ -135,6 +137,16 @@ class _TimeCopAppState extends State<TimeCopApp> with WidgetsBindingObserver {
         timersState.countRunningTimers(),
       ),
     );
+    // MainActivity applies the stored value before the first frame; this
+    // applies it whenever it changes.
+    var blockScreenshots = settingsBloc.state.blockScreenshots;
+    _blockScreenshots = settingsBloc.stream
+        .map((settingsState) => settingsState.blockScreenshots)
+        .where((value) => value != blockScreenshots)
+        .listen((value) {
+          blockScreenshots = value;
+          SecureScreen.setEnabled(value);
+        });
 
     // send commands to our top-level blocs to get them to initialize
     settingsBloc.add(LoadSettingsFromRepository());
@@ -199,6 +211,7 @@ class _TimeCopAppState extends State<TimeCopApp> with WidgetsBindingObserver {
   @override
   void dispose() {
     _updateTimersTimer.cancel();
+    _blockScreenshots.cancel();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }

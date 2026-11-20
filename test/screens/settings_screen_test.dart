@@ -1,7 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:timecop/models/theme_type.dart';
 import 'package:timecop/screens/settings/SettingsScreen.dart';
+import 'package:timecop/utils/secure_screen.dart';
 
 import '../helpers/fakes.dart';
 import '../helpers/pump_app.dart';
@@ -48,6 +50,7 @@ void main() {
       'nagAboutMissingTimer',
       false,
     ),
+    ('Block Screenshots', 'blockScreenshots', false),
   ];
 
   for (final (title, key, initial) in switches) {
@@ -238,5 +241,76 @@ void main() {
     await app.settle();
     expect(tester.takeException(), isNull);
     expect(find.byType(SettingsScreen), findsNothing);
+  });
+
+  group('Block Screenshots', () {
+    // the values sent to MainActivity's setSecure
+    late List<Object?> sent;
+
+    setUp(() {
+      sent = [];
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(SecureScreen.channel, (call) async {
+            expect(call.method, 'setSecure');
+            sent.add(call.arguments);
+            return null;
+          });
+    });
+
+    tearDown(() {
+      TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+          .setMockMethodCallHandler(SecureScreen.channel, null);
+    });
+
+    testWidgets('switching it turns FLAG_SECURE on and off', (tester) async {
+      final app = await openSettings(tester);
+      expect(sent, isEmpty);
+      await tester.ensureVisible(switchOf('Block Screenshots'));
+      await tester.tap(switchOf('Block Screenshots'));
+      await app.settle();
+      expect(sent, [true]);
+      await tester.tap(switchOf('Block Screenshots'));
+      await app.settle();
+      expect(sent, [true, false]);
+    });
+
+    testWidgets('a stored value is applied when the app starts', (
+      tester,
+    ) async {
+      await openSettings(
+        tester,
+        settings: InMemorySettingsProvider()
+          ..values['blockScreenshots'] = true,
+      );
+      expect(sent, [true]);
+      expect(find.text("Also hides the app's content in the list of recent apps"),
+          findsOneWidget);
+    });
+
+    testWidgets('is not offered on other platforms', (tester) async {
+      final app = await pumpApp(tester, settings: InMemorySettingsProvider());
+      await app.push(
+        Builder(
+          builder: (context) => Theme(
+            data: Theme.of(context).copyWith(platform: TargetPlatform.iOS),
+            child: SettingsScreen(),
+          ),
+        ),
+      );
+      expect(tester.takeException(), isNull);
+      expect(find.text('Remind to Start a Timer when None are Running'),
+          findsOneWidget);
+      expect(find.text('Block Screenshots'), findsNothing);
+    });
+
+    test('sends nothing on other platforms', () async {
+      debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
+      try {
+        await SecureScreen.setEnabled(true);
+      } finally {
+        debugDefaultTargetPlatformOverride = null;
+      }
+      expect(sent, isEmpty);
+    });
   });
 }

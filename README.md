@@ -25,6 +25,7 @@ Compared to the original, the fork:
 
 * builds with the current stable Flutter and Android toolchain, with updated dependencies
 * can **import a database on Android 13 and newer**. It uses Android's own file dialog and needs no storage permission; the original asks for a permission that Android no longer grants and only shows "Storage permission required" ([hamaluik/timecop#169](https://github.com/hamaluik/timecop/issues/169), [#120](https://github.com/hamaluik/timecop/issues/120))
+* can **block screenshots** (Settings > Block Screenshots, off by default). It also hides the app's content in the list of recent apps ([#44](https://github.com/twohardthings/timecopfork/issues/44))
 * has its own Android application ID (`io.github.twohardthings.timecopfork`) and name ("Time Cop Fork"), so it installs **alongside** the original app instead of replacing it. Data is not shared: export the database in the original app and import it in the fork to move your entries over
 * uses its own version numbers, starting again at 1.0.0
 * requires Android 7.0 (API 24) or newer

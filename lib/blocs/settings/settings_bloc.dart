@@ -75,6 +75,8 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
           settings.getBool("showProjectNames") ?? state.showProjectNames;
       bool nagAboutMissingTimer =
           settings.getBool("nagAboutMissingTimer") ?? state.nagAboutMissingTimer;
+      bool blockScreenshots =
+          settings.getBool("blockScreenshots") ?? state.blockScreenshots;
       emit(SettingsState(
         exportGroupTimers: exportGroupTimers,
         exportIncludeDate: exportIncludeDate,
@@ -96,6 +98,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
         showRunningTimersAsNotifications: showRunningTimersAsNotifications,
         showProjectNames: showProjectNames,
         nagAboutMissingTimer: nagAboutMissingTimer,
+        blockScreenshots: blockScreenshots,
       ));
     });
 
@@ -181,6 +184,9 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
       if (event.nagAboutMissingTimer != null) {
         await settings.setBool("nagAboutMissingTimer", event.nagAboutMissingTimer);
       }
+      if (event.blockScreenshots != null) {
+        await settings.setBool("blockScreenshots", event.blockScreenshots);
+      }
       emit(SettingsState.clone(
         state,
         exportGroupTimers: event.exportGroupTimers,
@@ -203,6 +209,7 @@ class SettingsBloc extends Bloc<SettingsEvent, SettingsState> {
             event.showRunningTimersAsNotifications,
         showProjectNames: event.showProjectNames,
         nagAboutMissingTimer: event.nagAboutMissingTimer,
+        blockScreenshots: event.blockScreenshots,
       ));
     });
 
