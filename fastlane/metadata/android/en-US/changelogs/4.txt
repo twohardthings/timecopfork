@@ -1,0 +1,1 @@
+- New in Settings: Block Screenshots (off by default). Blocks screenshots and screen recordings of the app and hides its content in the list of recent apps
