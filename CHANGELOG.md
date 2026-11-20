@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+* Releases start the publish workflow of the Two Hard Things F-Droid repo
+  (twohardthings/fdroid), so a new version is there within minutes. Needs
+  the FDROID_DISPATCH_TOKEN secret; without it, the F-Droid repo picks the
+  release up with its daily run.
 * README: how to install and update the app with Obtainium, straight from
   the GitHub releases.
 * README badges for the build status, latest release, minimum Android

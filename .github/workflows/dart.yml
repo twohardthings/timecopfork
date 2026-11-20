@@ -366,3 +366,30 @@ jobs:
             timecopfork-${{ env.VERSION }}-armeabi-v7a.apk
             timecopfork-${{ env.VERSION }}-x86_64.apk
           fail_on_unmatched_files: true
+
+      # Starts the F-Droid repo's publish workflow (twohardthings/fdroid), so
+      # the new release is in the F-Droid repo within minutes instead of with
+      # its next daily run. Needs the FDROID_DISPATCH_TOKEN secret: a
+      # fine-grained token for twohardthings/fdroid only, with only
+      # "Actions: Read and write". Without it, or if the request fails or
+      # takes over a minute, the release stays published and the daily run picks it up.
+      - name: Update the F-Droid repo
+        if: env.IS_RELEASE == 'true'
+        env:
+          TOKEN: ${{ secrets.FDROID_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::warning::No FDROID_DISPATCH_TOKEN secret; the F-Droid repo picks up the release with its daily run."
+            exit 0
+          fi
+          # timeout bounds the whole call: curl waits for Retry-After on a 429.
+          if timeout 60s curl -fsS --retry 3 --retry-max-time 45 --max-time 30 -X POST \
+              -H "Authorization: Bearer $TOKEN" \
+              -H "Accept: application/vnd.github+json" \
+              -H "X-GitHub-Api-Version: 2022-11-28" \
+              https://api.github.com/repos/twohardthings/fdroid/actions/workflows/publish.yml/dispatches \
+              -d '{"ref":"main"}'; then
+            echo "Started the F-Droid repo's publish workflow." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::Couldn't start the F-Droid repo's publish workflow; its daily run picks up the release."
+          fi
