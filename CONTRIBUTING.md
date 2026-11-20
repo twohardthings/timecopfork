@@ -1,17 +1,21 @@
-I'm happy to take bug reports and pull requests if you want to help improve _Time Cop_, but I fundamentally want to keep this app relatively small and simple. If that's not for you, there's [plenty](https://toggl.com/) of [other](https://clockify.me/) [options](https://www.workpuls.com/) [out](https://www.manictime.com/) [there](https://trackabi.com/).
+Bug reports and pull requests are welcome! Time Cop Fork aims to stay small and simple, like the original [Time Cop](https://github.com/hamaluik/timecop), so please open an issue first for larger features.
 
-The app is created pretty much entirely in [Dart](https://dart.dev/) using [Flutter](https://flutter.dev/), and I tried to make heavy use of the [Bloc](https://bloclibrary.dev/#/) pattern.
+The app is written in [Dart](https://dart.dev/) with [Flutter](https://flutter.dev/) and uses the [Bloc](https://bloclibrary.dev/) pattern. The fork is released for **Android only** for now ([#13](https://github.com/twohardthings/timecopfork/issues/13)).
 
-Here are a few resources to get you started if this is your first Flutter project:
+## Getting started
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+1. [Install Flutter](https://docs.flutter.dev/get-started/install) (latest stable) and the Android SDK.
+2. Clone this repository and run `flutter pub get`.
+3. Run the app on a device or emulator with `flutter run`.
 
-For help getting started with Flutter, view its [online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+New to Flutter? Start with [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab) and the [cookbook](https://docs.flutter.dev/cookbook).
 
-After [installing and setting up Flutter](https://docs.flutter.dev/get-started/install) (ideally its latest version) and downloading the Time Cop code, you can simply [build and run](https://docs.flutter.dev/get-started/test-drive#run-the-app) this Flutter project.
+## Before you open a pull request
 
-When building for Linux, you will need to install `libsqlite3` development packages first. On Debian-based distros, you can do so with this command:
+- `flutter analyze` reports no issues.
+- `flutter test` passes. If a screen's look changed on purpose, update the golden images (see "Testing" in the [README](README.md#testing)).
+- New strings are in every `l10n/*.flt` file.
+- User-facing changes are listed under `[Unreleased]` in [CHANGELOG.md](CHANGELOG.md).
+- Each pull request covers one topic.
 
-```sudo apt-get -y install libsqlite3-0 libsqlite3-dev```
+The project's conventions (toolchain versions, imports, translations, Android resources, releases, and what must not change for existing users) are in [AGENTS.md](AGENTS.md). It is written for AI coding agents, but applies to everyone.
