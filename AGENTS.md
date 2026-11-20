@@ -113,10 +113,16 @@ These are what users and other repositories rely on:
 - CI runs analyze and tests on PRs. On `master` it also builds the
   per-ABI release APKs (a workflow artifact).
 - A release run additionally:
-  - checks the signing certificate;
+  - checks the signing certificate (a mismatch stops the release);
   - scans the APKs with VirusTotal;
   - publishes the GitHub Release;
   - triggers the F-Droid repo.
+
+  The VirusTotal scan and the F-Droid trigger are best-effort. Without
+  `VIRUSTOTAL_API_KEY` or `FDROID_DISPATCH_TOKEN`, or if they fail, the
+  release is still published; the run shows a warning, the release notes
+  have no VirusTotal table, and the F-Droid repo picks the release up with
+  its daily run.
 - CodeRabbit and Codex review every PR. Fix findings that hold up, minor ones
   included, in the same PR, then reply on each thread and resolve it. Reply
   instead of changing code when a finding is wrong.
