@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-20
+New opt-in privacy setting. Updating from 1.0.2 keeps your data.
+
 ### Added
 * Settings: "Block Screenshots" (Android, off by default) blocks screenshots
   and screen recordings of the app and hides its content in the list of
@@ -253,7 +256,8 @@ Thanks to all the Hacktoberfest participants, translators, and other volunteers 
 * Ability to export database file
 * Ability to export csv of filtered data
 
-[Unreleased]: https://github.com/twohardthings/timecopfork/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/twohardthings/timecopfork/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/twohardthings/timecopfork/compare/v1.0.2...v1.1.0
 [1.0.2]: https://github.com/twohardthings/timecopfork/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/twohardthings/timecopfork/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/twohardthings/timecopfork/releases/tag/v1.0.0
