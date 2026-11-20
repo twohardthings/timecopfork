@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.2] - 2026-11-20
 The app itself is unchanged from 1.0.1. This release adds new ways to
 install it and to check downloads: the Two Hard Things F-Droid repo,
-VirusTotal reports and the signing fingerprint in the release notes.
+the signing fingerprint in the release notes and, when the scan
+succeeds, VirusTotal reports.
 Updating from 1.0.1 keeps your data.
 
 ### Added

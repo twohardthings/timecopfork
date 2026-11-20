@@ -1,4 +1,4 @@
 - No changes in the app itself
 - New: install and update from the Two Hard Things F-Droid repo
 - Release notes show the signing certificate fingerprint
-- Release APKs are scanned with VirusTotal, with links to the reports
+- When the VirusTotal scan succeeds, release notes link each APK's report
