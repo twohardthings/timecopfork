@@ -91,3 +91,5 @@ filterUntil = 过滤直到 { $dateUntil }
 filterFromUntil = 从{ $dateFrom }到{ $dateUntil }的过滤。
 exportCSV = 输出CSV
 storageAccessRequired = 需要存储访问权限
+blockScreenshots = 阻止截屏
+blockScreenshotsDescription = 同时在最近使用的应用列表中隐藏应用内容

@@ -84,3 +84,5 @@ exportImport = インポートとエクスポート
 exportCSV = CSVのエクスポート
 exportDatabase = データベースのエクスポート
 storageAccessRequired = ストレージアクセスが必要
+blockScreenshots = スクリーンショットをブロック
+blockScreenshotsDescription = 最近使ったアプリの一覧でもアプリの内容を非表示にします

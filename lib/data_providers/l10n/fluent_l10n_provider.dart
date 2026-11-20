@@ -268,6 +268,14 @@ class FluentL10NProvider extends L10NProvider {
       _bundle.format("nagAboutMissingTimer", errors: _errors) ??
       "nagAboutMissingTimer";
   @override
+  String get blockScreenshots =>
+      _bundle.format("blockScreenshots", errors: _errors) ??
+      "blockScreenshots";
+  @override
+  String get blockScreenshotsDescription =>
+      _bundle.format("blockScreenshotsDescription", errors: _errors) ??
+      "blockScreenshotsDescription";
+  @override
   String langName(Locale locale) {
     switch (locale.languageCode) {
       case "ar":

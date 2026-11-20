@@ -93,3 +93,5 @@ archive = 歸檔
 unarchive = 未歸檔
 setToCurrentTime = 設定成現在時間
 search = 搜尋
+blockScreenshots = 封鎖螢幕截圖
+blockScreenshotsDescription = 同時在最近使用的應用程式清單中隱藏應用程式內容

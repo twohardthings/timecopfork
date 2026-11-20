@@ -93,3 +93,5 @@ runningTimersNotificationTitle = Kørende timere
 noItemsFound = Ingen varer fundet
 filterFromUntil = Filtrering fra { $dateFrom } til { $dateUntil }
 runningTimersNotificationBody = Timerne kører stadig i baggrunden
+blockScreenshots = Bloker skærmbilleder
+blockScreenshotsDescription = Skjuler også appens indhold på listen over seneste apps

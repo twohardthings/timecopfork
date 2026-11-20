@@ -53,6 +53,18 @@ void main() {
     expect(state.autocompleteDescription, isTrue);
   });
 
+  test('Block Screenshots is off by default, stored and loaded', () async {
+    expect(SettingsState.initial().blockScreenshots, isFalse);
+    var state = await run(const SetBoolValueEvent(blockScreenshots: true));
+    expect(state.blockScreenshots, isTrue);
+    expect(settings.values, {'blockScreenshots': true});
+
+    await bloc.close();
+    bloc = SettingsBloc(settings, InMemoryDataProvider());
+    state = await run(LoadSettingsFromRepository());
+    expect(state.blockScreenshots, isTrue);
+  });
+
   test('SetBoolValueEvent changes and stores only the given values', () async {
     final state = await run(
       const SetBoolValueEvent(groupTimers: false, showProjectNames: true),

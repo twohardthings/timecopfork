@@ -93,3 +93,5 @@ filterUntil = { $dateUntil } tarihine kadar filtrele
 timerMenu = Zamanlayıcı Menüsü
 filterFrom = { $dateFrom } tarihinden itibaren filtrele
 startTimer = Zamanlayıcıyı Başlat
+blockScreenshots = Ekran Görüntülerini Engelle
+blockScreenshotsDescription = Uygulamanın içeriğini son uygulamalar listesinde de gizler

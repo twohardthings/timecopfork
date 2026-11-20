@@ -291,6 +291,21 @@ class SettingsScreen extends StatelessWidget {
                 activeThumbColor: Theme.of(context).colorScheme.primary,
               ),
             ),
+            // FLAG_SECURE exists only on Android.
+            if (Theme.of(context).platform == TargetPlatform.android)
+              BlocBuilder<SettingsBloc, SettingsState>(
+                bloc: settingsBloc,
+                builder: (BuildContext context, SettingsState settings) =>
+                    SwitchListTile.adaptive(
+                  title: Text(L10N.of(context).tr.blockScreenshots),
+                  subtitle:
+                      Text(L10N.of(context).tr.blockScreenshotsDescription),
+                  value: settings.blockScreenshots,
+                  onChanged: (bool value) => settingsBloc
+                      .add(SetBoolValueEvent(blockScreenshots: value)),
+                  activeThumbColor: Theme.of(context).colorScheme.primary,
+                ),
+              ),
           ],
         ));
   }

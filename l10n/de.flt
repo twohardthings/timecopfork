@@ -109,4 +109,6 @@ timetable = Zeitplan
 plusXDays = (+ { $days } T.)
 lightMaterialYou = Systemfarben – Hell
 showProjectNames = Projektnamen anzeigen
+blockScreenshots = Bildschirmfotos blockieren
+blockScreenshotsDescription = Verbirgt auch den Inhalt der App in der Liste der zuletzt verwendeten Apps
 darkMaterialYou = Systemfarben – Dunkel

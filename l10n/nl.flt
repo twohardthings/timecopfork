@@ -16,3 +16,5 @@ defaultFilterStartDateToMonday = Begin filterdatum standaard op maandag
 defaultFilterDays = Standaardfilterperiode (dagen)
 collapseDays = Instortings Dagen
 automaticLanguage = Automatisch
+blockScreenshots = Schermafbeeldingen blokkeren
+blockScreenshotsDescription = Verbergt ook de inhoud van de app in de lijst met recente apps

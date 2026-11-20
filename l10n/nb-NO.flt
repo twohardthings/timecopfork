@@ -84,3 +84,5 @@ search = Søke
 storageAccessRequired = Krever lagringstilgang
 filterFrom = Filtrering fra { $dateFrom }
 filterUntil = Filtrere til { $dateUntil }
+blockScreenshots = Blokker skjermbilder
+blockScreenshotsDescription = Skjuler også appens innhold i listen over nylige apper
