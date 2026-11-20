@@ -6,6 +6,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-11-20
+The app itself is unchanged from 1.0.1. This release adds new ways to
+install it and to check downloads: the Two Hard Things F-Droid repo,
+the signing fingerprint in the release notes and, when the scan
+succeeds, VirusTotal reports.
+Updating from 1.0.1 keeps your data.
+
 ### Added
 * README: F-Droid badge and "With F-Droid" install steps for the Two Hard
   Things F-Droid repo.
@@ -241,7 +248,8 @@ Thanks to all the Hacktoberfest participants, translators, and other volunteers 
 * Ability to export database file
 * Ability to export csv of filtered data
 
-[Unreleased]: https://github.com/twohardthings/timecopfork/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/twohardthings/timecopfork/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/twohardthings/timecopfork/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/twohardthings/timecopfork/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/twohardthings/timecopfork/releases/tag/v1.0.0
 [1.8.0]: https://github.com/hamaluik/timecop/compare/v1.7.2...v1.8.0
